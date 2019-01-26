@@ -306,6 +306,18 @@ namespace EvoInc.Net.UPnP.Discovery
                     }
                 }
             }
+
+            try
+            {
+                if (IsActive)
+                {
+                    tmrSearch.Stop();
+                    tmrSearch.Start();
+
+                    Task.Factory.StartNew(() => { this.TmrSearch_Elapsed(this, null); });
+                }
+            }
+            catch (Exception) { }
         }
 
         //--
