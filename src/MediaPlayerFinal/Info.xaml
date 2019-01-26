@@ -1,0 +1,104 @@
+<Window x:Class="MediaPlayerFinal.Info"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:MediaPlayerFinal"
+        Loaded="Window_Loaded" Title="Information" Height="339" Width="539" ShowInTaskbar="false"
+        Background="{x:Null}">
+  <Grid Width="528" Height="340" Background="#FF434343">
+    <TabControl Name="tabControl1" Height="259" HorizontalAlignment="Left" Margin="8,5,0,0" VerticalAlignment="Top"
+                Width="499" Background="{x:Null}">
+      <TabItem Name="tabItem1" Header="Track" Background="Black">
+        <Grid Width="529" Background="{x:Null}">
+          <GroupBox Name="groupBox1" Height="235" HorizontalAlignment="Left" Margin="0,11,0,0" VerticalAlignment="Top"
+                    Width="499" Background="#FF595959">
+            <Grid Name="grid1" Height="227" Width="484">
+              <Label Name="label1" Content="Title" Height="17" HorizontalAlignment="Left" Margin="19,22,0,0"
+                     VerticalAlignment="Top" Width="92"/>
+              <Label Name="label2" Content="Artist" Height="18" HorizontalAlignment="Left" Margin="19,49,0,0"
+                     VerticalAlignment="Top" Width="110"/>
+              <Label Name="label3" Content="Album" Height="19" HorizontalAlignment="Left" Margin="19,75,0,0"
+                     VerticalAlignment="Top" Width="68"/>
+              <Label Name="label4" Content="Genre" Height="18" HorizontalAlignment="Left" Margin="19,102,0,0"
+                     VerticalAlignment="Top" Width="87"/>
+              <Label Name="label5" Content="Year" Height="20" HorizontalAlignment="Left" Margin="19,129,0,0"
+                     VerticalAlignment="Top" Width="77"/>
+              <Label Name="label6" Content="Bitrate" Height="20" HorizontalAlignment="Left" Margin="19,162,0,0"
+                     VerticalAlignment="Top" Width="56"/>
+              <Label Name="label7" Content="Length" Height="17" HorizontalAlignment="Left" Margin="19,189,0,0"
+                     VerticalAlignment="Top" Width="56"/>
+              <TextBox Name="txtBitRate" Height="22" HorizontalAlignment="Left" Margin="86,162,0,0"
+                       VerticalAlignment="Top" Width="191" Background="#FF434343"/>
+              <TextBox Name="txtLength" Height="22" HorizontalAlignment="Left" Margin="86,189,0,0" VerticalAlignment="Top"
+                       Width="191" Background="#FF434343"/>
+              <TextBox Name="txtYear" Height="22" HorizontalAlignment="Left" Margin="86,128,0,0" VerticalAlignment="Top"
+                       Width="191" Background="#FF434343"/>
+              <TextBox Name="txtGenre" Height="22" HorizontalAlignment="Left" Margin="86,101,0,0" VerticalAlignment="Top"
+                       Width="191" Background="#FF434343"/>
+              <TextBox Name="txtTrackAlbum" Height="22" HorizontalAlignment="Left" Margin="86,74,0,0"
+                       VerticalAlignment="Top" Width="191" Background="#FF434343"/>
+              <TextBox Name="txtTrackArtist" Height="22" HorizontalAlignment="Left" Margin="86,47,0,0"
+                       VerticalAlignment="Top" Width="191" Background="#FF434343"/>
+              <TextBox Name="txtTitle" Height="22" HorizontalAlignment="Left" Margin="86,20,0,0" VerticalAlignment="Top"
+                       Width="191" Background="#FF434343"/>
+              <Image Name="imgAlbumArt" Height="175" HorizontalAlignment="Left" Margin="291,27,0,0" Stretch="Fill"
+                     VerticalAlignment="Top" Width="185" Source="/MediaPlayerFinal;component/Images/music.png"/>
+            </Grid>
+          </GroupBox>
+        </Grid>
+      </TabItem>
+      <TabItem Header="Artist" Background="#FFF0F0F0" Visibility="Hidden">
+        <Grid Name="grid2" Height="297" Width="502">
+          <GroupBox Name="groupBox2" Height="235" HorizontalAlignment="Left" Margin="0,11,0,0" VerticalAlignment="Top"
+                    Width="499" BorderBrush="#FF595959" Background="#FF595959">
+            <Grid Background="#FF595959" Width="495" Height="259">
+              <Label Name="label8" Content="Artist Name" Height="21" HorizontalAlignment="Left" Margin="12,24,0,0"
+                     VerticalAlignment="Top" Width="74"/>
+              <TextBox Name="txtArtistName" Height="22" HorizontalAlignment="Left" Margin="92,26,0,0"
+                       VerticalAlignment="Top" Width="343" Background="#FF434343"/>
+              <Label Name="label9" Content="DOB" Height="17" HorizontalAlignment="Left" Margin="12,56,0,0"
+                     VerticalAlignment="Top" Width="59"/>
+              <TextBox Name="txtArtistDOB" Height="22" HorizontalAlignment="Left" Margin="92,53,0,0"
+                       VerticalAlignment="Top" Width="343" Background="#FF434343"/>
+              <Label Name="label10" Content="Address" Height="16" HorizontalAlignment="Left" Margin="12,82,0,0"
+                     VerticalAlignment="Top" Width="69"/>
+              <TextBox Name="txtArtistAddr" Height="53" HorizontalAlignment="Left" Margin="92,80,0,0"
+                       VerticalAlignment="Top" Width="343" Background="#FF434343"/>
+              <Label Name="label11" Content="Telephone" Height="18" HorizontalAlignment="Left" Margin="12,136,0,0"
+                     VerticalAlignment="Top" Width="70"/>
+              <TextBox Name="txtArtistTel" Height="22" HorizontalAlignment="Left" Margin="92,138,0,0"
+                       VerticalAlignment="Top" Width="221" Background="#FF434343"/>
+              <Label Name="label12" Content="Email" Height="21" HorizontalAlignment="Left" Margin="12,165,0,0"
+                     VerticalAlignment="Top" Width="64"/>
+              <TextBox Name="txtArtistEmail" Height="22" HorizontalAlignment="Left" Margin="92,165,0,0"
+                       VerticalAlignment="Top" Width="221" Background="#FF434343"/>
+            </Grid>
+          </GroupBox>
+        </Grid>
+      </TabItem>
+      <TabItem Header="Album" Visibility="Hidden">
+        <GroupBox Name="groupBox3" Height="277" Width="498" BorderBrush="#FF333333" Background="#FF595959"
+                  Margin="0,11,0,0">
+          <Grid Background="#FF595959" Height="261">
+            <Label Name="label13" Content="Title " Height="19" HorizontalAlignment="Left" Margin="26,40,0,0"
+                   VerticalAlignment="Top" Width="80"/>
+            <Label Name="label14" Content="Year" Height="18" HorizontalAlignment="Left" Margin="26,94,0,0"
+                   VerticalAlignment="Top" Width="80" IsEnabled="false"/>
+            <Label Name="label15" Content="Artist" Height="21" HorizontalAlignment="Left" Margin="26,68,0,0"
+                   VerticalAlignment="Top" Width="56" IsEnabled="false"/>
+            <Label Name="label16" Content="Studio" Height="19" HorizontalAlignment="Left" Margin="26,119,0,0"
+                   VerticalAlignment="Top" Width="64"/>
+            <TextBox Name="txtAlbumTitle" Height="22" HorizontalAlignment="Left" Margin="112,42,0,0"
+                     VerticalAlignment="Top" Width="321" Background="#FF434343"/>
+            <TextBox Name="txtAlbumArtist" Height="22" HorizontalAlignment="Left" Margin="112,67,0,0"
+                     VerticalAlignment="Top" Width="321" Background="#FF434343"/>
+            <TextBox Name="txtAlbumYear" Height="22" HorizontalAlignment="Left" Margin="112,94,0,0"
+                     VerticalAlignment="Top" Width="103" Background="#FF434343"/>
+            <TextBox Name="txtAlbumStudio" Height="22" HorizontalAlignment="Left" Margin="112,119,0,0"
+                     VerticalAlignment="Top" Width="321" Background="#FF434343"/>
+          </Grid>
+        </GroupBox>
+      </TabItem>
+    </TabControl>
+    <Button Click="btnClose_Click" Name="btnClose" Content="Close" Height="27" HorizontalAlignment="Left"
+            Margin="410,270,0,0" VerticalAlignment="Top" Width="94"/>
+  </Grid>
+</Window>

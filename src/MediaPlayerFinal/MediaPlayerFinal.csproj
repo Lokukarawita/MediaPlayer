@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: D:\RadioDeskPlayer[HomeEdition]Beta1\RadioDeskPlayer[HomeEdition]\MediaPlayerFinal.exe-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E2010532-5E4F-4228-9684-C500DB5DC6C8}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>MediaPlayerFinal</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.1</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>MediaPlayerFinal</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AudioLibrary, Version=1.0.2489.31221, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\AudioLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="ParkSquare.UPnP, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ParkSquare.UPnP.1.0.1\lib\net452\ParkSquare.UPnP.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="policy.2.0.taglib-sharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
+      <HintPath>..\packages\taglib.2.1.0.0\lib\policy.2.0.taglib-sharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="taglib-sharp, Version=2.1.0.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
+      <HintPath>..\packages\taglib.2.1.0.0\lib\taglib-sharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="System.Data" />
+    <Reference Include="System" />
+    <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="RadioDesk\Data\Extra\SongInfo.cs" />
+    <Compile Include="RadioDesk\Data\Extra\DBConnection.cs" />
+    <Compile Include="RadioDesk\Data\Extra\DBConnectionException.cs" />
+    <Compile Include="RadioDesk\Data\Extra\AnalyticalFileAdder.cs" />
+    <Compile Include="RadioDesk\Data\Extra\FileAdderException.cs" />
+    <Compile Include="FFTGraph.xaml.cs">
+      <DependentUpon>FFTGraph.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Info.xaml.cs">
+      <DependentUpon>Info.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CurrentFileInfo.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FileAdder.xaml.cs">
+      <DependentUpon>FileAdder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NewDataSet.cs" />
+    <Compile Include="DBConnection.cs" />
+    <Compile Include="ExtendedQuerying.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="TracksDBSch.cs">
+      <DependentUpon>TracksDBSch.xsd</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bar.jpg" />
+    <Resource Include="Component\images\003359-glossy-black-icon-media-loud-speaker.png" />
+    <Resource Include="Component\images\album black.png" />
+    <Resource Include="Component\images\artistblack.png" />
+    <Resource Include="Component\images\dark_abstract_wallpaper_by_cuddly_kunoichi.jpg" />
+    <Resource Include="Component\images\fast.jpg" />
+    <Resource Include="Component\images\info.png" />
+    <Resource Include="Component\images\magnifying.png" />
+    <Resource Include="Component\images\magnifying1.png" />
+    <Resource Include="Component\images\music.png" />
+    <Resource Include="Component\images\next.jpg" />
+    <Resource Include="Component\images\pause.jpg" />
+    <Resource Include="Component\images\play.jpg" />
+    <Resource Include="Component\images\play clip.jpg" />
+    <Resource Include="Component\images\previous.jpg" />
+    <Resource Include="Component\images\rew.jpg" />
+    <Resource Include="Component\images\shuffle.jpg" />
+    <Resource Include="Component\images\shuffle.png" />
+    <Resource Include="Component\images\shuffle1.jpg" />
+    <Resource Include="Component\images\spek.jpg" />
+    <Resource Include="Component\images\spker.png" />
+    <Resource Include="Component\images\stop.jpg" />
+    <Resource Include="Component\images\stop clip.jpg" />
+    <Resource Include="Component\images\title black.png" />
+    <Resource Include="Component\images\year black.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources.resx" />
+    <EmbeddedResource Include="TracksDBSch.xsd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="FFTGraph.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FileAdder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Info.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Theme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HML.IO\HML.IO.csproj">
+      <Project>{35d1c2cb-fd66-4b5a-80e0-45333fea73a9}</Project>
+      <Name>HML.IO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HML.Threading\HML.Threading.csproj">
+      <Project>{763b7cfc-8c0e-439c-8022-f4f9d157e73a}</Project>
+      <Name>HML.Threading</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RadioDesk.Core\RadioDesk.Core.csproj">
+      <Project>{5cd3fe5d-1c96-4512-a316-ee2048490bb6}</Project>
+      <Name>RadioDesk.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="TracksDBSch.xsc">
+      <DependentUpon>TracksDBSch.xsd</DependentUpon>
+    </None>
+    <None Include="TracksDBSch.xss">
+      <DependentUpon>TracksDBSch.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Libs\libzplay.dll">
+      <Link>libzplay.dll</Link>
+    </Content>
+    <None Include="..\Libs\media_Database.accdb">
+      <Link>media_Database.accdb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

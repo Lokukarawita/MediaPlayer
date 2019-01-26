@@ -1,0 +1,596 @@
+<Window x:Class="MediaPlayerFinal.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:wf="clr-namespace:KA.Audio;assembly=AudioLibrary" 
+        Title="RadioDeskPlayer [Home Edition]" 
+        Height="714" Width="1084" MinWidth="995" MinHeight="560" 
+        WindowStartupLocation="CenterScreen" Background="{x:Null}">
+    <Grid x:Name="grdLayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="48"/>
+            <RowDefinition Height="455*"/>
+            <RowDefinition Height="48"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="144"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="106"/>
+            <ColumnDefinition Width="326"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel x:Name="splSearch" Grid.Row="1" Grid.Column="1" Orientation="Horizontal"
+                HorizontalAlignment="Right" Height="48" VerticalAlignment="Top" Opacity="0.3" Background="{x:Null}"/>
+        <TreeView x:Name="tvwLibrary" Grid.Row="2" Margin="8,6,0,28" BorderBrush="{x:Null}" Foreground="{x:Null}"
+              Background="{x:Null}">
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="TreeViewItem.IsExpanded" Value="true"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=Type}" Value="menu">
+                            <Setter Property="TreeViewItem.IsSelected" Value="true"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <TreeViewItem Header="Songs" FontSize="14" Foreground="White">
+                <TreeViewItem Selected="treechildTitle_Selected" x:Name="treechildTitle" IsSelected="false"
+                      Tag="&quot;Title&quot;">
+                    <HeaderedItemsControl.Header>
+                        <StackPanel MouseUp="stpchildTitle_MouseUp" x:Name="stpchildTitle" Orientation="Horizontal">
+                            <Image Source="component/Images/title%20black.png" Height="25"/>
+                            <TextBlock Text="Title"/>
+                        </StackPanel>
+                    </HeaderedItemsControl.Header>
+                </TreeViewItem>
+                <TreeViewItem Selected="treechildArtist_Selected" x:Name="treechildArtist" Uid="&quot;Artist&quot;">
+                    <HeaderedItemsControl.Header>
+                        <StackPanel MouseUp="childArtist_MouseUp" x:Name="childArtist" Orientation="Horizontal">
+                            <Image Source="component/Images/artistblack.png" Height="25"/>
+                            <TextBlock Text="Artist"/>
+                        </StackPanel>
+                    </HeaderedItemsControl.Header>
+                </TreeViewItem>
+                <TreeViewItem Selected="treechildAlbum_Selected" MouseUp="treechildAlbum_MouseUp" x:Name="treechildAlbum"
+                      Uid="&quot;Album&quot;">
+                    <HeaderedItemsControl.Header>
+                        <StackPanel x:Name="stpchildAlbum" Orientation="Horizontal">
+                            <Image Source="component/Images/album%20black.png" Height="25"/>
+                            <TextBlock Text="Album"/>
+                        </StackPanel>
+                    </HeaderedItemsControl.Header>
+                </TreeViewItem>
+                <TreeViewItem Selected="treechildYear_Selected" x:Name="treechildYear" Uid="&quot;Year&quot;">
+                    <HeaderedItemsControl.Header>
+                        <StackPanel MouseUp="childYear_MouseUp" x:Name="childYear" Orientation="Horizontal">
+                            <Image Source="component/Images/year%20black.png" Height="25"/>
+                            <TextBlock Text="Year"/>
+                        </StackPanel>
+                    </HeaderedItemsControl.Header>
+                </TreeViewItem>
+            </TreeViewItem>
+        </TreeView>
+        <DockPanel Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2">
+            <TabControl x:Name="tbcFeatures2" Height="316" DockPanel.Dock="Bottom" BorderBrush="Black" Width="407">
+                <FrameworkElement.Resources>
+                    <ResourceDictionary/>
+                </FrameworkElement.Resources>
+                <TabItem x:Name="tbiMixer" Header="Mixer" Height="29">
+                    <Grid x:Name="griMixer" Height="230" Width="404">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="77*"/>
+                            <ColumnDefinition Width="55*"/>
+                            <ColumnDefinition Width="132*"/>
+                        </Grid.ColumnDefinitions>
+                        <Slider ValueChanged="sliMasterVolume_ValueChanged" x:Name="sliMasterVolume" Orientation="Vertical"
+                    HorizontalAlignment="Center" Margin="52,10,58,76" Value="100" Maximum="100" TickFrequency="10"
+                    Foreground="#FFC4C4C4" TickPlacement="Both"/>
+                        <DockPanel HorizontalAlignment="Right" Margin="0,177,18,0" FlowDirection="LeftToRight" VerticalAlignment="Top"/>
+                        <Slider ValueChanged="sliPlayerVolume_ValueChanged" x:Name="sliPlayerVolume" Grid.Column="1"
+                    Orientation="Vertical" HorizontalAlignment="Center" Margin="52,13,46,73" Width="34"
+                    Grid.ColumnSpan="2" TickFrequency="10" Value="100" Maximum="100" TickPlacement="Both"/>
+                        <Slider ValueChanged="sliMicVolume_ValueChanged" x:Name="sliMicVolume" Grid.Column="3"
+                    Orientation="Vertical" HorizontalAlignment="Center" Margin="52,13,46,73" Width="34"
+                    IsEnabled="false" TickFrequency="10" Maximum="100" Value="40" TickPlacement="Both"/>
+                        <Rectangle Name="rectangle1" Height="46" HorizontalAlignment="Left" Margin="6,177,0,0" VerticalAlignment="Top"
+                       Width="127" OpacityMask="Black" Stroke="{x:Null}"/>
+                        <Label Name="label4" Content="Master Volume" Height="16" HorizontalAlignment="Left" Margin="28,161,0,0"
+                   VerticalAlignment="Top" Width="89"/>
+                        <Label Name="label5" Content="Mute" Height="19" HorizontalAlignment="Left" Margin="43,182,0,0"
+                   VerticalAlignment="Top" Width="33"/>
+                        <CheckBox Checked="chkMuteMaster_Checked" Unchecked="chkMuteMaster_Unchecked" Name="chkMuteMaster"
+                      Height="16" HorizontalAlignment="Right" Margin="0,182,32,0" VerticalAlignment="Top" Width="22"/>
+                        <Rectangle Name="rectangle2" Grid.Column="1" Height="64" HorizontalAlignment="Left" Margin="10,181,0,0"
+                       VerticalAlignment="Top" Width="126" Grid.ColumnSpan="3" OpacityMask="{x:Null}"/>
+                        <Label Name="label6" Content="Player Volume" Grid.Column="1" Height="17" HorizontalAlignment="Left"
+                   Margin="31,161,0,0" VerticalAlignment="Top" Width="98" IsEnabled="false" Grid.ColumnSpan="2"/>
+                        <Label Name="label7" Content="Mute" Grid.Column="1" Height="16" Margin="44,181,5,0"
+                   VerticalAlignment="Top"/>
+                        <CheckBox Checked="chkMutePlayer_Checked" Unchecked="chkMutePlayer_Unchecked" Name="chkMutePlayer"
+                      Grid.Column="2" Height="17" HorizontalAlignment="Right" Margin="0,182,40,0" VerticalAlignment="Top"
+                      Width="15"/>
+                        <Rectangle Name="rectangle3" Grid.Column="3" Height="51" HorizontalAlignment="Left" Margin="9,179,0,0"
+                       VerticalAlignment="Top" Width="126"/>
+                        <Label Name="label8" Content="Mic Volume" Grid.Column="3" Height="18" HorizontalAlignment="Left"
+                   Margin="36,162,0,0" VerticalAlignment="Top" Width="72" IsEnabled="false"/>
+                        <Label Name="label9" Content="Mute" Grid.Column="3" Height="15" HorizontalAlignment="Left"
+                   Margin="43,180,0,0" VerticalAlignment="Top" Width="33"/>
+                        <CheckBox Checked="chkMuteMic_Checked" Unchecked="chkMuteMic_Unchecked" Name="chkMuteMic" Grid.Column="3"
+                      Height="17" HorizontalAlignment="Left" Margin="79,181,0,0" VerticalAlignment="Top" Width="16"
+                      IsChecked="True"/>
+                        <UIElement.OpacityMask>
+                            <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+                                <GradientStop Color="Black" Offset="0"/>
+                                <GradientStop Color="White" Offset="1"/>
+                            </LinearGradientBrush>
+                        </UIElement.OpacityMask>
+                    </Grid>
+                </TabItem>
+                <TabItem x:Name="tbiEqualizer" Header="Equalizer" Background="#FF595959">
+                    <Grid x:Name="grdEquilizer">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="207*"/>
+                            <RowDefinition Height="48"/>
+                            <RowDefinition Height="32"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="37*"/>
+                            <ColumnDefinition Width="37*"/>
+                            <ColumnDefinition Width="37*"/>
+                            <ColumnDefinition Width="37*"/>
+                            <ColumnDefinition Width="37*"/>
+                            <ColumnDefinition Width="17*"/>
+                            <ColumnDefinition Width="20*"/>
+                            <ColumnDefinition Width="37*"/>
+                            <ColumnDefinition Width="37*"/>
+                            <ColumnDefinition Width="37*"/>
+                            <ColumnDefinition Width="37*"/>
+                            <ColumnDefinition Width="37*"/>
+                        </Grid.ColumnDefinitions>
+                        <Slider ValueChanged="sliEqPreAmp_ValueChanged" x:Name="sliEqPreAmp" Orientation="Vertical"
+                    HorizontalAlignment="Center" TickPlacement="Both" Maximum="40" Value="20" TickFrequency="5"
+                    Margin="9,36,36,0" Height="153" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+                        <Label x:Name="lblEqPreamp" Content="Amp" Margin="11,189,32,18" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+                        <Slider ValueChanged="sliEq1_ValueChanged" x:Name="sliEq1" Grid.Column="1" Orientation="Vertical"
+                    HorizontalAlignment="Left" TickPlacement="Both" Maximum="40" Value="20" TickFrequency="5"
+                    Margin="9,36,0,18" Grid.ColumnSpan="2"/>
+                        <Label x:Name="lblEq1" Grid.Column="1" Content="60H" Margin="13,190,36,17" Grid.RowSpan="2"
+                   Grid.ColumnSpan="2"/>
+                        <Slider ValueChanged="sliEq2_ValueChanged" x:Name="sliEq2" Grid.Column="2" Orientation="Vertical"
+                    HorizontalAlignment="Center" TickPlacement="Both" Maximum="40" Value="20" TickFrequency="5"
+                    Margin="9,36,36,18" Grid.ColumnSpan="2"/>
+                        <Label x:Name="lblEq2" Grid.Column="2" Content="170H" Margin="9,191,35,16" Grid.RowSpan="2"
+                   Grid.ColumnSpan="2"/>
+                        <Slider ValueChanged="sliEq3_ValueChanged" x:Name="sliEq3" Grid.Column="3" Orientation="Vertical"
+                    HorizontalAlignment="Center" TickPlacement="Both" Maximum="40" Value="20" TickFrequency="5"
+                    Margin="9,36,36,18" Grid.ColumnSpan="2"/>
+                        <Label x:Name="lblEq3" Grid.Column="3" Content="310H" Margin="12,191,35,16" Grid.RowSpan="2"
+                   Grid.ColumnSpan="2"/>
+                        <Slider ValueChanged="sliEq4_ValueChanged" x:Name="sliEq4" Grid.Column="4" Orientation="Vertical"
+                    HorizontalAlignment="Center" TickPlacement="Both" Maximum="40" Value="20" TickFrequency="5"
+                    Margin="9,36,16,18" Grid.ColumnSpan="2"/>
+                        <Label x:Name="lblEq4" Grid.Column="4" Content="600H" Margin="13,191,11,16" Grid.RowSpan="2"
+                   Grid.ColumnSpan="2"/>
+                        <Slider ValueChanged="sliEq5_ValueChanged" x:Name="sliEq5" Grid.Column="5" Orientation="Vertical"
+                    HorizontalAlignment="Center" TickPlacement="Both" Maximum="40" Value="20" TickFrequency="5"
+                    Margin="4,36,4,18" Grid.ColumnSpan="2"/>
+                        <Label x:Name="lblEq6" Grid.Column="5" Content="1k" Margin="14,191,7,16" Grid.RowSpan="2"
+                   Grid.ColumnSpan="2"/>
+                        <Slider ValueChanged="sliEq6_ValueChanged" x:Name="sliEq6" Grid.Column="7" Orientation="Vertical"
+                    HorizontalAlignment="Center" TickPlacement="Both" Maximum="40" Value="20" TickFrequency="5"
+                    Margin="4,36,4,18"/>
+                        <Label Name="label3" Content="3k" Margin="14,191,9,16" Grid.Column="7" Grid.RowSpan="2"/>
+                        <Label x:Name="lblEq7" Grid.Column="8" Content="6k" Margin="13,192,10,15" Grid.RowSpan="2"/>
+                        <Slider ValueChanged="sliEq7_ValueChanged" x:Name="sliEq7" Grid.Column="8" Orientation="Vertical"
+                    HorizontalAlignment="Center" TickPlacement="Both" Maximum="40" Value="20" TickFrequency="5"
+                    Margin="4,36,4,18"/>
+                        <Label x:Name="lblEq8" Grid.Column="9" Content="12k" Margin="12,191,5,16" Grid.RowSpan="2"/>
+                        <Slider ValueChanged="sliEq8_ValueChanged" x:Name="sliEq8" Grid.Column="9" Orientation="Vertical"
+                    HorizontalAlignment="Center" TickPlacement="Both" Maximum="40" Value="20" TickFrequency="5"
+                    Margin="4,36,4,18"/>
+                        <Label x:Name="lblEq9" Grid.Column="10" Content="14k" Margin="15,191,35,16" Grid.RowSpan="2"
+                   Grid.ColumnSpan="2"/>
+                        <Slider ValueChanged="sliEq9_ValueChanged" x:Name="sliEq9" Grid.Column="10" Orientation="Vertical"
+                    HorizontalAlignment="Center" TickPlacement="Both" Maximum="40" Value="20" TickFrequency="5"
+                    Margin="7,36,1,18"/>
+                        <Label x:Name="lblEq10" Grid.Column="11" Content="16k" Margin="12,191,4,16" Grid.RowSpan="2"/>
+                        <Slider ValueChanged="sliEq10_ValueChanged" Name="sliEq10" HorizontalAlignment="Center" Margin="3,36,5,18"
+                    Maximum="40" Orientation="Vertical" TickFrequency="5" TickPlacement="Both" Value="20"
+                    Grid.Column="11"/>
+                        <StackPanel x:Name="splButtons" Grid.Column="11" Grid.Row="1" Orientation="Horizontal"
+                        HorizontalAlignment="Right" Margin="0,26,0,6" Grid.RowSpan="2"/>
+                        <CheckBox Checked="chkEnableEQ_Checked" Unchecked="chkEnableEQ_Unchecked" Name="chkEnableEQ" Content="Enable"
+                      Grid.ColumnSpan="2" Height="16" HorizontalAlignment="Left" Margin="18,10,0,0"
+                      VerticalAlignment="Top"/>
+                        <Button Click="btnEQSave_Click" x:Name="btnEQSave" HorizontalAlignment="Right" Width="48"
+                    Margin="0,16,13,0" Content="_Save" Grid.ColumnSpan="2" Grid.Row="1"/>
+                        <Button Click="btnEQLoad_Click" x:Name="btnEQLoad" HorizontalAlignment="Right" Width="48"
+                    Margin="0,16,31,0" Content="_Load" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1"/>
+                        <ComboBox SelectionChanged="cmbEQPreset_SelectionChanged" Name="cmbEQPreset" Grid.ColumnSpan="5" Grid.Row="1"
+                      Height="21" HorizontalAlignment="Left" Margin="25,20,0,0" VerticalAlignment="Top" Width="144"
+                      Grid.Column="7" SelectedIndex="-1">
+                            <ComboBoxItem Content="Default"/>
+                            <ComboBoxItem Content="BassTreble"/>
+                            <ComboBoxItem Content="Custom"/>
+                        </ComboBox>
+                        <Label Name="label15" Content="Preset :" Grid.ColumnSpan="3" Margin="14,22,11,5" Grid.Column="5"
+                   Grid.Row="1"/>
+                    </Grid>
+                </TabItem>
+                <TabItem x:Name="tbiEffects" Header="Effects">
+                    <Grid x:Name="gridEffects" RenderTransformOrigin="0.5,0.5">
+                        <FrameworkElement.Resources>
+                            <Style TargetType="{x:Type Label}">
+                                <Setter Property="Control.FontSize" Value="17"/>
+                            </Style>
+                        </FrameworkElement.Resources>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="70*"/>
+                            <RowDefinition Height="56*"/>
+                            <RowDefinition Height="64*"/>
+                            <RowDefinition Height="97*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="66,11,47,1">
+                            <Label x:Name="lblStereoEffects" Content="Stereo Effects" FontSize="13.333" Margin="0,7.337,0,8.663"
+                     Foreground="White" Height="25" Width="96"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="85,6,68,6">
+                            <Label x:Name="lblTempo" Content="Tempo" FontSize="13.333" Foreground="White" Height="30"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="93,4,71,8">
+                            <Label x:Name="lblPitch" Content="Pitch" FontSize="13.333" Foreground="White" Height="25"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="95,2,72,46">
+                            <Label x:Name="lblRate" Content="Rate" FontSize="13.333" Foreground="White" Height="30"/>
+                        </StackPanel>
+                        <StackPanel x:Name="spStereoEffects" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center"
+                        Margin="11,15,32,0"/>
+                        <StackPanel x:Name="spTempo" Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center"
+                        Margin="12,0,31,0">
+                            <ComboBox SelectionChanged="cmbTempo_SelectionChanged" x:Name="cmbTempo" Height="26" Width="160"
+                        SelectedIndex="3">
+                                <ComboBoxItem Content="Highest"/>
+                                <ComboBoxItem Content="Higher"/>
+                                <ComboBoxItem Content="High"/>
+                                <ComboBoxItem Content="Normal"/>
+                                <ComboBoxItem Content="Low"/>
+                                <ComboBoxItem Content="Lower"/>
+                                <ComboBoxItem Content="Lowest"/>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel x:Name="spPitch" Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center"
+                        Margin="12,0,31,1">
+                            <ComboBox SelectionChanged="cmbPitch_SelectionChanged" x:Name="cmbPitch" Height="25" Width="160"
+                        SelectedIndex="3">
+                                <ComboBoxItem Content="Highest"/>
+                                <ComboBoxItem Content="Higher"/>
+                                <ComboBoxItem Content="High"/>
+                                <ComboBoxItem Content="Normal"/>
+                                <ComboBoxItem Content="Low"/>
+                                <ComboBoxItem Content="Lower"/>
+                                <ComboBoxItem Content="Lowest"/>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel x:Name="spRate" Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center"
+                        Margin="12,10,31,51">
+                            <ComboBox SelectionChanged="cmbRate_SelectionChanged" x:Name="cmbRate" Height="26" Width="160"
+                        SelectedIndex="3">
+                                <ComboBoxItem Content="Highest"/>
+                                <ComboBoxItem Content="Higher"/>
+                                <ComboBoxItem Content="High"/>
+                                <ComboBoxItem Content="Normal"/>
+                                <ComboBoxItem Content="Low"/>
+                                <ComboBoxItem Content="Lower"/>
+                                <ComboBoxItem Content="Lowest"/>
+                            </ComboBox>
+                        </StackPanel>
+                        <ComboBox SelectionChanged="cmbStereoEffects_SelectionChanged" x:Name="cmbStereoEffects" Width="160"
+                      Margin="12,31,31,14" SelectedIndex="0" Grid.Column="1">
+                            <ComboBoxItem Content="None"/>
+                            <ComboBoxItem Content="Basscut"/>
+                            <ComboBoxItem Content="Vocalcut"/>
+                        </ComboBox>
+                    </Grid>
+                </TabItem>
+                <TabItem x:Name="tbiMic" Header="Mic">
+                    <Grid>
+                        <FrameworkElement.Resources>
+                            <Style TargetType="{x:Type Label}">
+                                <Setter Property="Control.FontSize" Value="16"/>
+                            </Style>
+                        </FrameworkElement.Resources>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="204*"/>
+                            <ColumnDefinition Width="65*"/>
+                            <ColumnDefinition Width="138*"/>
+                        </Grid.ColumnDefinitions>
+                        <Slider ValueChanged="sliEchoLevel_ValueChanged" x:Name="sliEchoLevel" Orientation="Vertical"
+                    HorizontalAlignment="Center" Margin="80,43,0,50" TickPlacement="Both" Maximum="800"
+                    TickFrequency="20" Value="352"/>
+                        <Label x:Name="lblEchoLevel" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="105,0,24,18"
+                   Content="Echo Level" FontSize="13.333" Width="74.09" Foreground="White"/>
+                        <Slider ValueChanged="sliEchoVolume_ValueChanged" x:Name="sliEchoVolume" Grid.Column="1"
+                    Orientation="Vertical" HorizontalAlignment="Center" Margin="53,43,117,50" Width="33"
+                    TickPlacement="Both" Grid.ColumnSpan="2" TickFrequency="10" Maximum="100" Value="12"/>
+                        <Label x:Name="lblEchoVolume" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                   Margin="0,0,83,18" Content="Echo Volume" FontSize="13.333" Foreground="White" Width="94"
+                   Grid.ColumnSpan="2"/>
+                        <CheckBox Checked="chkMicEffectsEnable_Checked" Unchecked="chkMicEffectsEnable_Unchecked"
+                      x:Name="chkMicEffectsEnable" VerticalAlignment="Center" HorizontalAlignment="Right"
+                      Margin="0,26,112,213" FontSize="13" Content="Enable"/>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+            <TabControl x:Name="tbcFeatures1" Height="221" Width="414" HorizontalContentAlignment="Center">
+                <TabItem x:Name="tbiPlaylist" Header="PlayList" Height="29">
+                    <ListBox PreviewMouseDoubleClick="lstPlaylist_PreviewMouseDoubleClick" x:Name="lstPlaylist" Width="395"
+                   Height="166" DisplayMemberPath="DisplayView">
+                        <FrameworkElement.ContextMenu>
+                            <ContextMenu>
+                                <ItemsControl.Items>
+                                    <MenuItem Click="mnuPlaylistPlay_Click" Name="mnuPlaylistPlay" Header="Play"/>
+                                    <MenuItem Click="mnuPlaylistInfo_Click" Name="mnuPlaylistInfo" Header="Information"/>
+                                    <Separator/>
+                                    <MenuItem Click="mnuPlaylistRemove_Click" Name="mnuPlaylistRemove" Header="Remove"/>
+                                    <MenuItem Click="mnuPlaylistRemoveAll_Click" Name="mnuPlaylistRemoveAll" Header="Remove All"/>
+                                    <Separator/>
+                                    <MenuItem Name="mnuPlaylistMode" Header="Play Mode">
+                                        <ItemsControl.Items>
+                                            <MenuItem Click="mnuPlaylistNormal_Click" Name="mnuPlaylistNormal" Header="Normal" IsCheckable="true"
+                                IsChecked="true"/>
+                                            <MenuItem Click="mnuPlaylistRepeat_Click" Name="mnuPlaylistRepeat" Header="Repeat Track" IsCheckable="true"
+                                IsChecked="false"/>
+                                            <MenuItem Click="mnuPlaylistRepeatAll_Click" Name="mnuPlaylistRepeatAll" Header="Repeat All"
+                                IsCheckable="true" IsChecked="false"/>
+                                        </ItemsControl.Items>
+                                    </MenuItem>
+                                    <MenuItem Click="mnuPlaylistShuffled_Click" Name="mnuPlaylistShuffled" IsCheckable="true" Header="Shuffled"/>
+                                    <Separator/>
+                                    <MenuItem Click="mnuPlaylistSave_Click" Name="mnuPlaylistSave" Header="Save"/>
+                                    <MenuItem Click="mnuPlaylistLoad_Click" Name="mnuPlaylistLoad" Header="Load"/>
+                                </ItemsControl.Items>
+                            </ContextMenu>
+                        </FrameworkElement.ContextMenu>
+                    </ListBox>
+                </TabItem>
+                <TabItem x:Name="tbiClipPlayer" Header="Clip Player" Visibility="Hidden">
+                    <Grid MinHeight="139" MinWidth="432">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="78"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="22*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="274*"/>
+                            <ColumnDefinition Width="158*"/>
+                        </Grid.ColumnDefinitions>
+                        <Slider ValueChanged="sliClips_ValueChanged" x:Name="sliClipsAdsVol" Grid.Row="2" Orientation="Horizontal"
+                    TickFrequency="10" Maximum="100" Value="100" Margin="69,47,2,39" TickPlacement="Both"/>
+                        <Grid Margin="3,4,39,104" ColumnSpan="2" RowSpan="3">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="34*"/>
+                                <RowDefinition Height="33*"/>
+                                <RowDefinition Height="7*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.489*"/>
+                                <ColumnDefinition Width="0.511*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Content="Clips" Margin="0,36,135,18" FontSize="10.667" HorizontalAlignment="Right" Width="35"
+                     Grid.RowSpan="2"/>
+                            <Label Content="Ads" Margin="0,36,131,-7" Grid.Row="1" HorizontalAlignment="Right" Width="37.816"
+                     Grid.RowSpan="2"/>
+                            <ComboBox DropDownClosed="cmbClips_DropDownClosed" x:Name="cmbClips" Margin="59,35,4,19"
+                        DisplayMemberPath="title" Grid.ColumnSpan="2" Grid.RowSpan="2" ItemsSource="{Binding}"/>
+                            <ComboBox DropDownClosed="cmbAds_DropDownClosed" x:Name="cmbAds" Margin="59,35,0,-10" Grid.Row="1"
+                        DisplayMemberPath="adv_name" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="327"
+                        Grid.RowSpan="2" ItemsSource="{Binding}"/>
+                            <StackPanel x:Name="sp" Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right"
+                          Margin="0,39,-13,-93"/>
+                        </Grid>
+                        <Image Name="image2" Height="32" HorizontalAlignment="Left" Margin="22,43,0,0" Stretch="Fill"
+                   VerticalAlignment="Top" Width="36" Source="component/Images/spker.png"
+                   Grid.Row="2"/>
+                        <Rectangle Name="rectangle9" Grid.ColumnSpan="2" Grid.Row="2" Height="22" HorizontalAlignment="Left"
+                       Margin="18,81,0,0" Stroke="Black" VerticalAlignment="Top" Width="371" Fill="#FF595959"/>
+                        <Label Name="label13" Content="Selected :" Grid.Row="2" Height="14" HorizontalAlignment="Left"
+                   Margin="22,84,0,0" VerticalAlignment="Top" Width="53"/>
+                        <Label Name="lblSelectedClipAd" Content="None" Grid.ColumnSpan="2" Grid.Row="2" Height="15"
+                   Margin="77,84,50,0" VerticalAlignment="Top" Background="#FF595959"/>
+                        <Button Click="btnClipPlay_Click" x:Name="btnClipPlay" Height="30" Width="43" Content="" Grid.Column="1"
+                    Margin="29,46,86,38" Grid.Row="2">
+                            <Control.Background>
+                                <ImageBrush ImageSource="component/Images/play%20clip.jpg"/>
+                            </Control.Background>
+                        </Button>
+                        <Button Click="btnClipStop_Click" x:Name="btnClipStop" Height="30" Width="43" Margin="72,46,43,38"
+                    Content="" Grid.Column="1" Grid.Row="2">
+                            <Control.Background>
+                                <ImageBrush ImageSource="component/Images/stop%20clip.jpg"/>
+                            </Control.Background>
+                        </Button>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </DockPanel>
+        <StackPanel x:Name="splPlayerButtons" Grid.Row="3" Grid.Column="1" Orientation="Horizontal"
+                HorizontalAlignment="Center">
+            <FrameworkElement.Resources>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Control.Background" Value="{x:Null}"/>
+                    <Setter Property="Control.BorderBrush" Value="{x:Null}"/>
+                </Style>
+            </FrameworkElement.Resources>
+        </StackPanel>
+        <StackPanel Grid.ColumnSpan="4" Grid.Row="3">
+            <UIElement.Effect>
+                <DropShadowEffect/>
+            </UIElement.Effect>
+            <Panel.Background>
+                <ImageBrush ImageSource="bar.jpg"/>
+            </Panel.Background>
+        </StackPanel>
+        <StackPanel Grid.ColumnSpan="4" Grid.Row="1">
+            <Panel.Background>
+                <ImageBrush ImageSource="bar.jpg"/>
+            </Panel.Background>
+        </StackPanel>
+        <StackPanel Name="sptext" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                Margin="0,0,3,3"/>
+        <StackPanel Name="spButtons" Grid.Row="3" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center"
+                Margin="220,0,96,0" Grid.ColumnSpan="2">
+            <Button Click="btnprevious_Click" Name="btnprevious" Height="36" Width="38" Visibility="Visible"
+              ToolTip="not fully implemented">
+                <Control.Background>
+                    <ImageBrush ImageSource="component/Images/Previous.jpg"/>
+                </Control.Background>
+            </Button>
+            <Button Click="btnRewind_Click" Name="btnRewind" Height="36" Width="38">
+                <Control.Background>
+                    <ImageBrush ImageSource="component/Images/rew.jpg"/>
+                </Control.Background>
+            </Button>
+            <Button Click="btnStop_Click" Name="btnStop" Content="" Height="36" Width="38">
+                <Control.Background>
+                    <ImageBrush ImageSource="component/Images/Stop.jpg"/>
+                </Control.Background>
+            </Button>
+            <Button Click="btnPlay_Click" Name="btnPlay" Content="" Height="45" Width="49">
+                <Control.Background>
+                    <ImageBrush ImageSource="Component/images/play.jpg"/>
+                </Control.Background>
+            </Button>
+            <Button Click="btnpause_Click" Name="btnpause" Content="" Height="36" Width="38">
+                <Control.Background>
+                    <ImageBrush ImageSource="component/Images/Pause.jpg"/>
+                </Control.Background>
+            </Button>
+            <Button Click="btnForward_Click" Name="btnForward" Content="" Height="36" Width="38">
+                <Control.Background>
+                    <ImageBrush ImageSource="component/Images/fast.jpg"/>
+                </Control.Background>
+            </Button>
+            <Button Click="btnNext_Click" Name="btnNext" Content="" Height="36" Width="38" Visibility="Visible"
+              ToolTip="not fully implemented">
+                <Control.Background>
+                    <ImageBrush ImageSource="component/Images/Next.jpg"/>
+                </Control.Background>
+            </Button>
+        </StackPanel>
+        <StackPanel Name="stackPanel1" Grid.Column="3" Margin="82,6,16,16" Orientation="Horizontal" Grid.Row="1">
+            <TextBox TextChanged="txtSearch_TextChanged"
+               PreviewMouseLeftButtonDown="txtSearch_PreviewMouseLeftButtonDown" LostFocus="txtSearch_LostFocus"
+               Name="txtSearch" Height="32" Width="203" Text="Search" FontStyle="Italic"/>
+            <Image Name="image1" Height="20" Stretch="Fill" Width="22"
+             Source="component/Images/magnifying1.png"/>
+        </StackPanel>
+        <StackPanel Name="stackPanel2" Height="31" Width="30" Grid.Column="1" Margin="113,9,254,8" Grid.Row="3">
+            <Button Click="btnshuf_Click" Name="btnshuf" Height="30" Width="29" Visibility="Hidden">
+                <Control.Background>
+                    <ImageBrush ImageSource="component/Images/shuffle.jpg"/>
+                </Control.Background>
+            </Button>
+        </StackPanel>
+        <Rectangle Name="rectangle4" Grid.Row="2" Height="21" HorizontalAlignment="Left" Margin="12,411,0,0"
+               VerticalAlignment="Top" Width="124" Fill="#FF595959" Stroke="Black"/>
+        <Label Name="label10" Content="L" Grid.Row="2" Height="13" HorizontalAlignment="Left" Margin="33,413,0,0"
+           VerticalAlignment="Top" Width="11"/>
+        <Label Name="label11" Content="R" Grid.Row="2" Height="13" HorizontalAlignment="Left" Margin="63,413,0,0"
+           VerticalAlignment="Top" Width="14"/>
+        <Label Name="label12" Content="Mic" Grid.Row="2" Height="13" HorizontalAlignment="Left"
+           Margin="107,413,0,0" VerticalAlignment="Top" Width="25" IsEnabled="false"/>
+        <Rectangle Name="rectangle5" Grid.Row="2" Height="254" HorizontalAlignment="Left" Margin="13,152,0,0"
+               Stroke="Black" VerticalAlignment="Top" Width="76" Fill="#FF595959"/>
+        <WindowsFormsHost Name="windowsFormsHost1" Height="235" HorizontalAlignment="Left" Margin="25,161,0,0"
+                      VerticalAlignment="Top" Width="21" Grid.Row="2">
+            <wf:VuMeter x:Name="VUML" AnalogMeter="false" BackColor="Black" DialBackground="White" DialTextNegative="Red"
+                  DialTextPositive="Black" DialTextZero="DarkGreen" Led1ColorOff="DarkGreen" Led1ColorOn="Lime"
+                  Led1Count="28" Led2ColorOff="Olive" Led2ColorOn="Yellow" Led2Count="3" Led3ColorOff="Maroon"
+                  Led3ColorOn="Red" Led3Count="2" LedSize="15,6" LedSpace="1" Level="0" LevelMax="100" Location="0,0"
+                  MeterScale="Analog" NeedleColor="Black" PeakHold="false" PeakNeedleColor="Red" Peakms="10"
+                  ShowDialOnly="false" ShowLedPeak="false" ShowTextInDial="false" Size="17,232" UseLedLight="false"
+                  VerticalBar="true" Visible="true" VuText="VU"/>
+        </WindowsFormsHost>
+        <WindowsFormsHost Name="windowsFormsHost2" Height="235" HorizontalAlignment="Left" Margin="56,161,0,0"
+                      VerticalAlignment="Top" Width="21" Grid.Row="2">
+            <wf:VuMeter x:Name="VUMR" AnalogMeter="false" BackColor="Black" DialBackground="White" DialTextNegative="Red"
+                  DialTextPositive="Black" DialTextZero="DarkGreen" Led1ColorOff="DarkGreen" Led1ColorOn="Lime"
+                  Led1Count="28" Led2ColorOff="Olive" Led2ColorOn="Yellow" Led2Count="3" Led3ColorOff="Maroon"
+                  Led3ColorOn="Red" Led3Count="2" LedSize="15,6" LedSpace="1" Level="0" LevelMax="100" Location="0,0"
+                  MeterScale="Analog" NeedleColor="Black" PeakHold="false" PeakNeedleColor="Red" Peakms="100"
+                  ShowDialOnly="false" ShowLedPeak="false" ShowTextInDial="false" Size="17,232" UseLedLight="false"
+                  VerticalBar="true" Visible="true" VuText="VU"/>
+    </WindowsFormsHost>
+        <Rectangle Name="rectangle6" Grid.Row="2" Height="254" HorizontalAlignment="Left" Margin="95,152,0,0"
+               Stroke="Black" VerticalAlignment="Top" Width="41" Fill="#FF595959"/>
+        <WindowsFormsHost Name="windowsFormsHost3" Height="235" HorizontalAlignment="Left" Margin="105,161,0,0"
+                      VerticalAlignment="Top" Width="21" Grid.Row="2">
+            <wf:VuMeter x:Name="VUMM" AnalogMeter="false" BackColor="Black" DialBackground="White" DialTextNegative="Red"
+                  DialTextPositive="Black" DialTextZero="DarkGreen" Led1ColorOff="DarkGreen" Led1ColorOn="Lime"
+                  Led1Count="28" Led2ColorOff="Olive" Led2ColorOn="Yellow" Led2Count="3" Led3ColorOff="Maroon"
+                  Led3ColorOn="Red" Led3Count="2" LedSize="15,6" LedSpace="1" Level="0" LevelMax="100" Location="0,0"
+                  MeterScale="Analog" NeedleColor="Black" PeakHold="false" PeakNeedleColor="Red" Peakms="100"
+                  ShowDialOnly="false" ShowLedPeak="false" ShowTextInDial="false" Size="17,232" UseLedLight="false"
+                  VerticalBar="true" Visible="true" VuText="VU"/>
+        </WindowsFormsHost>
+        <ListView MouseDoubleClick="listView1_MouseDoubleClick" Name="listView1" Grid.Column="1" Grid.Row="2"
+              Height="527" HorizontalAlignment="Left" Margin="11,8,0,0" VerticalAlignment="Top" Width="491"
+              Grid.ColumnSpan="2" SelectionMode="Single" Foreground="{x:Null}">
+            <FrameworkElement.ContextMenu>
+                <ContextMenu x:Name="mnuResultGrid" VerticalAlignment="Center">
+                    <ItemsControl.Items>
+                        <MenuItem Click="mnuListViewAddToPlaylist_Click" Name="mnuListViewAddToPlaylist" Header="Add to Playlist"
+                      Grid.IsSharedSizeScope="true"/>
+                        <MenuItem Click="mnuListViewInfo_Click" Name="mnuListViewInfo" Header="Information"
+                      Grid.IsSharedSizeScope="true"/>
+                        <Separator/>
+                        <MenuItem Click="mnuListViewSearchMedia_Click" Name="mnuListViewSearchMedia" Header="Add Media Files"
+                      Grid.IsSharedSizeScope="true"/>
+                    </ItemsControl.Items>
+                </ContextMenu>
+            </FrameworkElement.ContextMenu>
+            <ListView.View>
+                <GridView x:Name="gvSearchResult" AllowsColumnReorder="false">
+                    <GridViewColumn Header="Artist" DisplayMemberBinding="{Binding artist}"/>
+                    <GridViewColumn Header="Title" DisplayMemberBinding="{Binding song_name}"/>
+                    <GridViewColumn Header="Album" DisplayMemberBinding="{Binding album}"/>
+                    <GridViewColumn Header="Year" DisplayMemberBinding="{Binding song_year}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Rectangle Name="rectangle8" Grid.ColumnSpan="4" Height="24" HorizontalAlignment="Left" Stroke="Black"
+               VerticalAlignment="Top" Width="1086" Fill="#FF595959"/>
+        <Label MouseDoubleClick="lblInformationBar_MouseDoubleClick" Name="lblInformationBar"
+           Content="Information Bar" Height="18" HorizontalAlignment="Left" Margin="14,4,0,0"
+           VerticalAlignment="Top" Width="788" Foreground="White" Grid.ColumnSpan="4" BorderBrush="#FFF20C0C"/>
+        <Label x:Name="lblCurrentTime" Content="00:00:00" Grid.Column="3" Height="15" HorizontalAlignment="Left"
+           Margin="196,5,0,0" VerticalAlignment="Top" Width="49" Foreground="White"/>
+        <Label x:Name="lblTotalTime" Content="00:00:00" Grid.Column="3" Height="18" HorizontalAlignment="Left"
+           Margin="259,4,0,0" VerticalAlignment="Top" Width="51" IsEnabled="false" Foreground="White"/>
+        <Label Name="label1" Content="/" Grid.Column="3" Height="14" HorizontalAlignment="Left" Margin="248,4,0,0"
+           VerticalAlignment="Top" Width="9"/>
+        <Label Name="lblShuffleInfo" Content="Label" Grid.Column="3" Height="17" HorizontalAlignment="Left"
+           Margin="127,5,0,0" VerticalAlignment="Top" Width="62" Visibility="Hidden"/>
+        <Rectangle Name="rectangle7" Fill="#80FFFFFF" Grid.ColumnSpan="4" Height="20" HorizontalAlignment="Left"
+               Margin="3,542,0,0" Stroke="Black" VerticalAlignment="Top" Width="1061" Grid.Row="2"
+               Grid.RowSpan="2" OpacityMask="White" Opacity="1"/>
+        <Slider PreviewMouseDown="sliSeekBar_PreviewMouseDown" PreviewMouseUp="sliSeekBar_PreviewMouseUp"
+            x:Name="sliSeekBar" Grid.ColumnSpan="4" Height="14" HorizontalAlignment="Left" Margin="9,545,0,0"
+            VerticalAlignment="Top" Width="1049" Grid.Row="2" Grid.RowSpan="2" TickPlacement="None"/>
+        <Image Name="imgAlbumArt" Margin="25,437,20,35" Source="component/Images/music.png"
+           Stretch="Fill" Grid.Row="2"/>
+        <Panel.Background>
+            <ImageBrush ImageSource="component/Images/Dark_Abstract_Wallpaper_by_Cuddly_Kunoichi.jpg"/>
+        </Panel.Background>
+    </Grid>
+</Window>

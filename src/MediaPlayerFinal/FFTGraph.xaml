@@ -1,0 +1,23 @@
+<Window x:Class="MediaPlayerFinal.FFTGraph"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:MediaPlayerFinal" 
+        xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        StateChanged="Window_StateChanged" SizeChanged="Window_SizeChanged" Title="FFTGraph" Height="439"
+        Width="422">
+  <FrameworkElement.ContextMenu>
+    <ContextMenu Name="mnuMain">
+      <ItemsControl.Items>
+        <MenuItem Name="mnuSacle" Header="Scale Type">
+          <MenuItem Header="Linear"/>
+          <MenuItem Header="Log"/>
+        </MenuItem>
+      </ItemsControl.Items>
+    </ContextMenu>
+  </FrameworkElement.ContextMenu>
+  <Grid>
+    <WindowsFormsHost Name="windowsFormsHost1" Height="400" HorizontalAlignment="Left" VerticalAlignment="Top"
+                      Width="400">
+      <wf:PictureBox x:Name="FFTGraphPicture" Width="400" Height="400" Dock="Fill"/>
+    </WindowsFormsHost>
+  </Grid>
+</Window>

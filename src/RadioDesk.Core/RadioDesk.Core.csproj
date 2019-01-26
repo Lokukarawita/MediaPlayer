@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--Project was exported from assembly: D:\RadioDeskPlayer[HomeEdition]Beta1\RadioDeskPlayer[HomeEdition]\RadioDesk.Core.dll-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5CD3FE5D-1C96-4512-A316-EE2048490BB6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>RadioDesk.Core</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="policy.2.0.taglib-sharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
+      <HintPath>..\packages\taglib.2.1.0.0\lib\policy.2.0.taglib-sharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="taglib-sharp, Version=2.1.0.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
+      <HintPath>..\packages\taglib.2.1.0.0\lib\taglib-sharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="RadioDesk\Core\MediaPlaybackException.cs" />
+    <Compile Include="RadioDesk\Core\PlaylistException.cs" />
+    <Compile Include="RadioDesk\Core\PlaylistReaderException.cs" />
+    <Compile Include="RadioDesk\Core\PlaylistWriter.cs" />
+    <Compile Include="RadioDesk\Core\PlaylistReader.cs" />
+    <Compile Include="RadioDesk\Core\EchoSettings.cs" />
+    <Compile Include="RadioDesk\Core\EQSettings.cs" />
+    <Compile Include="RadioDesk\Core\EQPreset.cs" />
+    <Compile Include="RadioDesk\Core\PlayEffectRate.cs" />
+    <Compile Include="RadioDesk\Core\StereoEffectType.cs" />
+    <Compile Include="RadioDesk\Core\FFTWindowStyle.cs" />
+    <Compile Include="RadioDesk\Core\FFTScaleDistribution.cs" />
+    <Compile Include="RadioDesk\Core\FFTGraphStyle.cs" />
+    <Compile Include="RadioDesk\Core\PlaylistMode.cs" />
+    <Compile Include="RadioDesk\Core\PlaylistType.cs" />
+    <Compile Include="RadioDesk\Core\PlaylistItemDirection.cs" />
+    <Compile Include="RadioDesk\Core\EQSettingsLoaded.cs" />
+    <Compile Include="RadioDesk\Core\PlaylistTotalTimeCalc.cs" />
+    <Compile Include="RadioDesk\Core\PlaylistLoadSave.cs" />
+    <Compile Include="RadioDesk\Core\ClipFinishedPlaying.cs" />
+    <Compile Include="RadioDesk\Core\RadioDeskPlaylist.cs" />
+    <Compile Include="RadioDesk\Core\RadioDeskEqualizer.cs" />
+    <Compile Include="RadioDesk\Core\RadioDeskEcho.cs" />
+    <Compile Include="RadioDesk\Core\RadioDeskFFTGraph.cs" />
+    <Compile Include="RadioDesk\Core\RadioDeskPlayer.cs" />
+    <Compile Include="RadioDesk\Core\RadioDeskClipPlayer.cs" />
+    <Compile Include="RadioDesk\Core\RadioDeskMicControl.cs" />
+    <Compile Include="RadioDesk\Core\RadioDeskUtils.cs" />
+    <Compile Include="RadioDesk\Core\TagReadException.cs" />
+    <Compile Include="RadioDesk\Core\TagInfo.cs" />
+    <Compile Include="libZPlay\TCallbackFunc.cs" />
+    <Compile Include="libZPlay\TSettingID.cs" />
+    <Compile Include="libZPlay\TStreamFormat.cs" />
+    <Compile Include="libZPlay\TStreamInfo.cs" />
+    <Compile Include="libZPlay\TWaveOutInfo.cs" />
+    <Compile Include="libZPlay\TWaveInInfo.cs" />
+    <Compile Include="libZPlay\TFFTWindow.cs" />
+    <Compile Include="libZPlay\TTimeFormat.cs" />
+    <Compile Include="libZPlay\TSeekMethod.cs" />
+    <Compile Include="libZPlay\TStreamLoadInfo.cs" />
+    <Compile Include="libZPlay\TEchoEffect.cs" />
+    <Compile Include="libZPlay\TID3Version.cs" />
+    <Compile Include="libZPlay\TFFTGraphHorizontalScale.cs" />
+    <Compile Include="libZPlay\TFFTGraphParamID.cs" />
+    <Compile Include="libZPlay\TFFTGraphType.cs" />
+    <Compile Include="libZPlay\TStreamStatus.cs" />
+    <Compile Include="libZPlay\TStreamHMSTime.cs" />
+    <Compile Include="libZPlay\TStreamTime.cs" />
+    <Compile Include="libZPlay\TID3Info.cs" />
+    <Compile Include="libZPlay\TID3Picture.cs" />
+    <Compile Include="libZPlay\TID3InfoEx.cs" />
+    <Compile Include="libZPlay\TBPMDetectionMethod.cs" />
+    <Compile Include="libZPlay\TFFTGraphSize.cs" />
+    <Compile Include="libZPlay\TWaveOutMapper.cs" />
+    <Compile Include="libZPlay\TWaveInMapper.cs" />
+    <Compile Include="libZPlay\TCallbackMessage.cs" />
+    <Compile Include="libZPlay\TWaveOutFormat.cs" />
+    <Compile Include="libZPlay\TWaveOutFunctionality.cs" />
+    <Compile Include="libZPlay\ZPlay.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Libs\libzplay.dll">
+      <Link>libzplay.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
