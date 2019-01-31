@@ -312,6 +312,7 @@ namespace DLNATest
                         ListViewItem item = new ListViewItem();
                         item.Text = mediaItem.Title;
                         item.Tag = mediaItem.Id;
+                        //listView1.ContextMenu = mnuCtxMediaItem;
 
 
                         if (mediaItem.AlbumArtURI == null)
@@ -432,6 +433,69 @@ namespace DLNATest
         {
             locator.Stop();
             locator.Dispose();
+        }
+
+        private void listView1_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                if (listView1.FocusedItem != null)
+                    if (listView1.FocusedItem.Bounds.Contains(e.Location))
+                    {
+                        mnuCtxMediaItem.Show(Cursor.Position);
+                    }
+            }
+        }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                if (listView1.SelectedItems.Count > 1)
+                {
+                    
+                }
+                else
+                {
+                    var item = listView1.SelectedItems[0];
+                    var id = item.Tag.ToString();
+                    if (currentMediaItemList.ContainsKey(id))
+                    {
+                        var mediaItem = currentMediaItemList[id];
+                        var resource = mediaItem.Resources.Where(x => x.Protocol.Mime.Contains("audio")).FirstOrDefault();
+                        SaveFileDialog dlg = new SaveFileDialog();
+                        if (dlg.ShowDialog() == DialogResult.OK)
+                        {
+                            using (WebClient cl = new WebClient())
+                            {
+                                var data = cl.DownloadData(resource.Uri);
+
+                                using (var fs = File.Open(dlg.FileName, FileMode.Create, FileAccess.ReadWrite))
+                                {
+                                    fs.Write(data, 0, data.Length);
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+
+
+            }
+        }
+
+        private void mnuCtxMediaItem_Opening(object sender, CancelEventArgs e)
+        {
+            if (listView1.SelectedItems.Count == 0)
+            {
+                mnuCtxMediaItem.Items[0].Enabled = false;
+            }
+            else
+            {
+                mnuCtxMediaItem.Items[0].Enabled = true;
+
+            }
         }
     }
 }
