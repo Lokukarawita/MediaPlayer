@@ -44,6 +44,8 @@
             this.bredcrumMain = new System.Windows.Forms.FlowLayoutPanel();
             this.axWindowsMediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
             this.imageListMediaItems = new System.Windows.Forms.ImageList(this.components);
+            this.mnuCtxMediaItem = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -58,6 +60,7 @@
             this.splitContainer3.Panel2.SuspendLayout();
             this.splitContainer3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).BeginInit();
+            this.mnuCtxMediaItem.SuspendLayout();
             this.SuspendLayout();
             // 
             // contextMenuStrip1
@@ -84,6 +87,7 @@
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.DoubleClick += new System.EventHandler(this.listView1_DoubleClick);
+            this.listView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseClick);
             // 
             // imageList2
             // 
@@ -200,6 +204,21 @@
             this.imageListMediaItems.ImageSize = new System.Drawing.Size(128, 128);
             this.imageListMediaItems.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // mnuCtxMediaItem
+            // 
+            this.mnuCtxMediaItem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem2});
+            this.mnuCtxMediaItem.Name = "mnuCtxMediaItem";
+            this.mnuCtxMediaItem.Size = new System.Drawing.Size(153, 48);
+            this.mnuCtxMediaItem.Opening += new System.ComponentModel.CancelEventHandler(this.mnuCtxMediaItem_Opening);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem2.Text = "Download";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -224,6 +243,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).EndInit();
+            this.mnuCtxMediaItem.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -243,6 +263,8 @@
         private System.Windows.Forms.FlowLayoutPanel bredcrumMain;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ContextMenuStrip mnuCtxMediaItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
     }
 }
 
