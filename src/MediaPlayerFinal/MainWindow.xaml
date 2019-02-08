@@ -47,7 +47,7 @@
                 <TreeViewItem Selected="treechildArtist_Selected" x:Name="treechildArtist" Uid="&quot;Artist&quot;">
                     <HeaderedItemsControl.Header>
                         <StackPanel MouseUp="childArtist_MouseUp" x:Name="childArtist" Orientation="Horizontal">
-                            <Image Source="component/Images/artistblack.png" Height="25"/>
+                            <Image Source="/component/Images/artistblack.png" Height="25"/>
                             <TextBlock Text="Artist"/>
                         </StackPanel>
                     </HeaderedItemsControl.Header>
@@ -56,7 +56,7 @@
                       Uid="&quot;Album&quot;">
                     <HeaderedItemsControl.Header>
                         <StackPanel x:Name="stpchildAlbum" Orientation="Horizontal">
-                            <Image Source="component/Images/album%20black.png" Height="25"/>
+                            <Image Source="/component/Images/album%20black.png" Height="25"/>
                             <TextBlock Text="Album"/>
                         </StackPanel>
                     </HeaderedItemsControl.Header>
@@ -589,8 +589,8 @@
             VerticalAlignment="Top" Width="1049" Grid.Row="2" Grid.RowSpan="2" TickPlacement="None"/>
         <Image Name="imgAlbumArt" Margin="25,437,20,35" Source="component/Images/music.png"
            Stretch="Fill" Grid.Row="2"/>
-        <Panel.Background>
+        <!--<Panel.Background>
             <ImageBrush ImageSource="component/Images/Dark_Abstract_Wallpaper_by_Cuddly_Kunoichi.jpg"/>
-        </Panel.Background>
+        </Panel.Background>-->
     </Grid>
 </Window>
