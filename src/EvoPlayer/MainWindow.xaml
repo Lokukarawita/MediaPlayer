@@ -13,10 +13,9 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="647" Width="704" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+        Title="EvoPlayer" Height="761.866" Width="926.699" WindowStartupLocation="CenterScreen">
     <materialDesign:DrawerHost>
         <materialDesign:DrawerHost.RightDrawerContent>
-
             <ListView>
                 <ListView.Resources>
                     <Style TargetType="GridViewColumnHeader">
@@ -39,98 +38,48 @@
         </materialDesign:DrawerHost.RightDrawerContent>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="535*"/>
-                <RowDefinition Height="81*"/>
+                <RowDefinition Height="633*"/>
+                <RowDefinition Height="17*"/>
+                <RowDefinition Height="82*"/>
             </Grid.RowDefinitions>
+            <materialDesign:Card Grid.Row="0"
+    materialDesign:ShadowAssist.ShadowDepth="Depth4"
+    Padding="32" Height="300" Width="300" Margin="310,189,309,0">
+                <Image x:Name="imgAlbumArt" Grid.Row="0" HorizontalAlignment="Left" Height="Auto" Margin="296,170,0,0" VerticalAlignment="Top" Width="Auto"/>
+            </materialDesign:Card>
 
-
-
-
-            <!--<materialDesign:DrawerHost Margin="64" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="2" BorderBrush="{DynamicResource MaterialDesignDivider}">
-            <materialDesign:DrawerHost.RightDrawerContent>
-                <StackPanel Margin="16">
-                    <TextBlock Margin="4" HorizontalAlignment="Center">LEFT FIELD</TextBlock>
-                    <Button Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
-                        CommandParameter="{x:Static Dock.Left}"
-                        Margin="4" HorizontalAlignment="Center"
-                        Style="{DynamicResource MaterialDesignFlatButton}">
-                        CLOSE THIS
-                    </Button>
-                    <Button Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
-                        Margin="4" HorizontalAlignment="Center"
-                        Style="{DynamicResource MaterialDesignFlatButton}">
-                        CLOSE ALL
-                    </Button>
-                </StackPanel>
-            </materialDesign:DrawerHost.RightDrawerContent>
-            <Grid MinWidth="480" MinHeight="480">
-                <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Button Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
-                        CommandParameter="{x:Static Dock.Left}"
-                        Grid.Row="1" Grid.Column="0"  Margin="4">
-                        <materialDesign:PackIcon Kind="ArrowLeft" />
-                    </Button>
-                    <Button Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
-                        CommandParameter="{x:Static Dock.Top}"
-                        Grid.Row="0" Grid.Column="1" Margin="4">
-                        <materialDesign:PackIcon Kind="ArrowUp" />
-                    </Button>
-                    <Button Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
-                        CommandParameter="{x:Static Dock.Right}"
-                        Grid.Row="1" Grid.Column="2" Margin="4">
-                        <materialDesign:PackIcon Kind="ArrowRight" />
-                    </Button>
-                    <Button Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
-                        CommandParameter="{x:Static Dock.Bottom}"
-                        Grid.Row="2" Grid.Column="1" Margin="4">
-                        <materialDesign:PackIcon Kind="ArrowDown" />
-                    </Button>
-                    <Button Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
-                        Grid.Row="1" Grid.Column="1" Margin="4" 
-                        Style="{DynamicResource MaterialDesignRaisedAccentButton}">
-                        <materialDesign:PackIcon Kind="ArrowAll" />
-                    </Button>
-                </Grid>
-            </Grid>
-        </materialDesign:DrawerHost>-->
-
-
-
-
-            <materialDesign:Card
- 
-  Padding="8" Grid.Row="1" VerticalAlignment="Stretch">
+            <Slider Name="sldSeek" Grid.Row="1"
+  TickFrequency="5"
+  Orientation="Horizontal"
+  Minimum="1"
+  Maximum="100"
+  Value="25" />
+            <materialDesign:Card  Padding="8" Grid.Row="2" VerticalAlignment="Stretch">
                 <Grid Height="81" VerticalAlignment="Bottom" Margin="0,-10,-16,-6" RenderTransformOrigin="0.5,0.5" >
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="160*"/>
-                        <ColumnDefinition Width="335*"/>
+                        <ColumnDefinition Width="64*"/>
+                        <ColumnDefinition Width="183*"/>
+                        <ColumnDefinition Width="491*"/>
                         <ColumnDefinition Width="130"/>
                         <ColumnDefinition Width="64"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="1" Orientation="Horizontal" Width="196" HorizontalAlignment="Center" Margin="69,0,70,0">
-                        <Button Margin="10,10,10,10"
+                    <Button Name="btnML" Click="btnML_Click" Width="Auto" Height="Auto" Grid.Column="0"   Style="{StaticResource MaterialDesignFlatButton}" >
+                        <materialDesign:PackIcon HorizontalAlignment="Center" VerticalAlignment="Center" Kind="LibraryMusic" Height="35" Width="35" Foreground="White" />
+                    </Button>
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" Width="231" HorizontalAlignment="Center" Margin="112,0,148,0">
+                        <Button Name="btnPrv" Margin="15,10,10,10"
   Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
   materialDesign:ButtonProgressAssist.IsIndicatorVisible="False"
   materialDesign:ButtonProgressAssist.Value="75">
                             <materialDesign:PackIcon Kind="PreviousTitle" Height="24" Width="24" />
                         </Button>
-                        <Button Margin="10,10,10,10"
+                        <Button Name="btnPlay" Margin="10,10,10,10"
   Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
   materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
   materialDesign:ButtonProgressAssist.Value="0" Height="Auto">
                             <materialDesign:PackIcon Kind="Play" Height="40" Width="40" />
                         </Button>
-                        <Button Margin="10,10,10,10"
+                        <Button Name="btnNext" Margin="10,10,10,10"
   Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
   materialDesign:ButtonProgressAssist.IsIndicatorVisible="False"
   materialDesign:ButtonProgressAssist.Value="75">
@@ -142,14 +91,15 @@
   Maximum="100"
   Style="{StaticResource MaterialDesignDiscreteSlider}"
   ToolTip="MaterialDesignDiscreteSlider"
-  Value="100" Margin="10,0,10,29" Grid.Column="2" Height="52" VerticalAlignment="Bottom" />
-                    <Button Width="Auto" Height="Auto" Grid.Column="3"   Style="{StaticResource MaterialDesignFlatButton}" 
+  Value="100" Margin="10,0,5,30" Grid.Column="3" Height="51" VerticalAlignment="Bottom" />
+                    <Button Width="Auto" Height="Auto" Grid.Column="4"   Style="{StaticResource MaterialDesignFlatButton}" 
                         Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
                         CommandParameter="{x:Static Dock.Right}">
-                        <materialDesign:PackIcon Kind="PlaylistEdit" Height="40" Width="35" Foreground="White" />
+                        <materialDesign:PackIcon HorizontalAlignment="Center" VerticalAlignment="Center" Kind="PlaylistEdit" Height="40" Width="35" Foreground="White" />
                     </Button>
                 </Grid>
             </materialDesign:Card>
+
 
         </Grid>
     </materialDesign:DrawerHost>

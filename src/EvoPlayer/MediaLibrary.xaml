@@ -1,0 +1,83 @@
+﻿<Window x:Class="EvoPlayer.MediaLibrary"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EvoPlayer"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        mc:Ignorable="d"
+        Title="EvoPlayer - Media Libary" Height="672" Width="828" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="113*"/>
+            <ColumnDefinition Width="297*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32*"/>
+            <RowDefinition Height="289*"/>
+        </Grid.RowDefinitions>
+        <materialDesign:ColorZone
+  Mode="PrimaryDark"
+  Padding="16" Grid.ColumnSpan="2" Height="58">
+            <DockPanel>
+                <materialDesign:PopupBox      DockPanel.Dock="Right"      PlacementMode="BottomAndAlignRightEdges">
+                    <ListBox>
+                        <ListBoxItem>
+                            Hello World
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            Nice Popup
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            Goodbye.
+                        </ListBoxItem>
+                    </ListBox>
+                </materialDesign:PopupBox>
+                <StackPanel
+      Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Margin="16 0 0 0">Media Library</TextBlock>
+                </StackPanel>
+            </DockPanel>
+        </materialDesign:ColorZone>
+
+        <!--Left Pane-->
+        <TreeView x:Name="trvMLLoc" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"    Grid.Column="0" Grid.Row="1"  MinWidth="220" >
+            <TreeViewItem Header="Local">
+                <TreeViewItem.Items>
+                    <TreeViewItem x:Name="trviMusic">
+                        <TreeViewItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Viewbox Width="16" Height="16">
+                                    <materialDesign:PackIcon Kind="Music" />
+                                </Viewbox>
+                                <TextBlock Margin="8 0 0 0">Music</TextBlock>
+                            </StackPanel>
+                        </TreeViewItem.Header>
+                    </TreeViewItem>
+                    <TreeViewItem x:Name="trviPlaylist">
+                        <TreeViewItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <Viewbox Width="16" Height="16">
+                                    <materialDesign:PackIcon Kind="PlaylistEdit" />
+                                </Viewbox>
+                                <TextBlock Margin="8 0 0 0">Playlist</TextBlock>
+                            </StackPanel>
+                        </TreeViewItem.Header>
+                    </TreeViewItem>
+                </TreeViewItem.Items>
+            </TreeViewItem>
+            <TreeViewItem x:Name="trviNetwork" Header="Network">
+
+            </TreeViewItem>
+
+        </TreeView>
+
+    </Grid>
+</Window>

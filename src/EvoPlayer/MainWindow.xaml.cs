@@ -19,9 +19,29 @@ namespace EvoPlayer
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        private MediaLibrary _ml;
+
         public MainWindow()
         {
             InitializeComponent();
+
+
+        }
+
+        private void btnML_Click(object sender, RoutedEventArgs e)
+        {
+            if (_ml != null && !_ml.IsActive)
+            {
+                _ml.Focus();
+
+            }
+            else
+            {
+                _ml = new MediaLibrary();
+                _ml.Show();
+
+            }
         }
     }
 }
