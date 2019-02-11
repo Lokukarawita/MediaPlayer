@@ -134,6 +134,15 @@ namespace EvoInc.Net.UPnP.Discovery
         }
         private void OnUdpError(UdpSocket socket, Exception ex)
         {
+            if(ex!=null && ex.GetType() == typeof(SocketException))
+            {
+                var sktex = ex as SocketException;
+                if(sktex.SocketErrorCode== SocketError.ConnectionReset)
+                {
+                    Debug.WriteLine("DiscoveryService: Connection closed by remote endpoint on IP " + socket.Address.ToString());
+                    return;
+                }
+            }
             socket.Dispose();
             Debug.WriteLine("DiscoveryService: Socket failure detected on IP " + socket.Address.ToString());
             UdpSocket skt;

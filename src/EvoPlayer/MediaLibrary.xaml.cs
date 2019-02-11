@@ -44,8 +44,15 @@ namespace EvoPlayer
             newdeviceQueue = new ConcurrentQueue<Device>();
             currentDeviceList = new ConcurrentDictionary<string, Device>();
             netssdp = new DiscoveryService();
+            //netssdp
             netssdp.DeviceStatusUpdate += Netssdp_DeviceStatusUpdate;
+            netssdp.SearchPacketsToSend = 1;
+            netssdp.FilterByService = new string[] {
+                "urn:schemas-upnp-org:device:MediaServer:1"
+            };
 
+            tmrNewDeviceQueue.Start();
+            netssdp.StartAsync();
         }
 
         private void TmrNewDeviceQueue_Tick(object sender, EventArgs e)
@@ -55,7 +62,13 @@ namespace EvoPlayer
                 Device d;
                 if (newdeviceQueue.TryDequeue(out d))
                 {
-                    //
+                    if (!currentDeviceList.ContainsKey(d.Udn))
+                    {
+                        if (currentDeviceList.TryAdd(d.Udn, d))
+                        {
+                            AddDeviceToTree(d);
+                        }
+                    }
                 }
             }
         }
@@ -69,13 +82,12 @@ namespace EvoPlayer
                     var data = client.DownloadData(uri.ToString());
                     var ms = new System.IO.MemoryStream(data);
                     var image = System.Drawing.Image.FromStream(ms);
-
+                    return image;
                 }
-
             }
             catch (Exception)
             {
-                return 
+                return Properties.Resources.server_icon;
             }
         }
 
@@ -87,27 +99,53 @@ namespace EvoPlayer
             var pngIcon = device.Icons.FirstOrDefault(x => x.Height == 48 && x.MimeType == "image/png");
             var jpgIcon = device.Icons.FirstOrDefault(x => x.Height == 48 && x.MimeType == "image/jpeg");
 
-            var idx = 0;
+            System.Drawing.Image image = null;
+
             if (pngIcon != null)
             {
-                idx = GetDeviceImage(device.ModelName, pngIcon.Url);
+                image = GetDeviceImage(device.ModelName, pngIcon.Url);
             }
             else
             {
-                idx = GetDeviceImage(device.ModelName, jpgIcon.Url);
+                image = GetDeviceImage(device.ModelName, jpgIcon.Url);
             }
 
-            var item = new TreeNode()
-            {
-                Text = device.FriendlyName.Split(':')[1].Trim(),
-                ImageIndex = idx,
-                SelectedImageIndex = idx,
-                Tag = device.Udn
-            };
-            treeView1.Nodes[0].Nodes.Add(item);
-            if (!treeView1.Nodes[0].IsExpanded)
-                treeView1.Nodes[0].Expand();
 
+
+            StackPanel stp = new StackPanel();
+            stp.Orientation = Orientation.Horizontal;
+
+            System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(image);
+
+            var bitSrc = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
+                bmp.GetHbitmap(),
+                IntPtr.Zero,
+                System.Windows.Int32Rect.Empty,
+                BitmapSizeOptions.FromWidthAndHeight(image.Width, image.Height));
+            Image ctrlImg = new Image();
+            ctrlImg.Stretch = Stretch.Uniform;
+            ctrlImg.Width = 32;
+            ctrlImg.Height = 32;
+            ctrlImg.Source = bitSrc;
+
+
+
+            Viewbox vbimage = new Viewbox();
+            vbimage.Width = 32;
+            vbimage.Height = 32;
+            vbimage.Child = ctrlImg;
+
+            TextBlock tb = new TextBlock();
+            tb.Text = device.FriendlyName.Split(':')[1].Trim();
+            tb.Margin = new Thickness(8, 8, 0, 0);
+
+            stp.Children.Add(vbimage);
+            stp.Children.Add(tb);
+
+            TreeViewItem item = new TreeViewItem();
+            item.Header = stp;
+
+            trviNetwork.Items.Add(item);
         }
 
 

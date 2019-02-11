@@ -13,7 +13,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="EvoPlayer" Height="761.866" Width="926.699" WindowStartupLocation="CenterScreen">
+        Title="EvoPlayer" Height="691.966" Width="883.924" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <materialDesign:DrawerHost>
         <materialDesign:DrawerHost.RightDrawerContent>
             <ListView>
@@ -36,19 +36,19 @@
             </ListView>
 
         </materialDesign:DrawerHost.RightDrawerContent>
-        <Grid>
+        <Grid RenderTransformOrigin="0.497,0.469">
             <Grid.RowDefinitions>
-                <RowDefinition Height="633*"/>
-                <RowDefinition Height="17*"/>
-                <RowDefinition Height="82*"/>
+                <RowDefinition Height="525*"/>
+                <RowDefinition Height="25*"/>
+                <RowDefinition Height="81*"/>
             </Grid.RowDefinitions>
             <materialDesign:Card Grid.Row="0"
     materialDesign:ShadowAssist.ShadowDepth="Depth4"
-    Padding="32" Height="300" Width="300" Margin="310,189,309,0">
+    Padding="32" Height="300" Width="300" Margin="290,155,286,0">
                 <Image x:Name="imgAlbumArt" Grid.Row="0" HorizontalAlignment="Left" Height="Auto" Margin="296,170,0,0" VerticalAlignment="Top" Width="Auto"/>
             </materialDesign:Card>
 
-            <Slider Name="sldSeek" Grid.Row="1"
+            <Slider Name="sldSeek" Grid.Row="1" Margin="5 0 5 0"
   TickFrequency="5"
   Orientation="Horizontal"
   Minimum="1"
@@ -57,16 +57,16 @@
             <materialDesign:Card  Padding="8" Grid.Row="2" VerticalAlignment="Stretch">
                 <Grid Height="81" VerticalAlignment="Bottom" Margin="0,-10,-16,-6" RenderTransformOrigin="0.5,0.5" >
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="64*"/>
-                        <ColumnDefinition Width="183*"/>
-                        <ColumnDefinition Width="491*"/>
+                        <ColumnDefinition Width="59*"/>
+                        <ColumnDefinition Width="163*"/>
+                        <ColumnDefinition Width="460*"/>
                         <ColumnDefinition Width="130"/>
                         <ColumnDefinition Width="64"/>
                     </Grid.ColumnDefinitions>
                     <Button Name="btnML" Click="btnML_Click" Width="Auto" Height="Auto" Grid.Column="0"   Style="{StaticResource MaterialDesignFlatButton}" >
                         <materialDesign:PackIcon HorizontalAlignment="Center" VerticalAlignment="Center" Kind="LibraryMusic" Height="35" Width="35" Foreground="White" />
                     </Button>
-                    <StackPanel Grid.Column="2" Orientation="Horizontal" Width="231" HorizontalAlignment="Center" Margin="112,0,148,0">
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" Width="220" HorizontalAlignment="Center" Margin="110,0,130,0">
                         <Button Name="btnPrv" Margin="15,10,10,10"
   Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
   materialDesign:ButtonProgressAssist.IsIndicatorVisible="False"
@@ -91,10 +91,10 @@
   Maximum="100"
   Style="{StaticResource MaterialDesignDiscreteSlider}"
   ToolTip="MaterialDesignDiscreteSlider"
-  Value="100" Margin="10,0,5,30" Grid.Column="3" Height="51" VerticalAlignment="Bottom" />
-                    <Button Width="Auto" Height="Auto" Grid.Column="4"   Style="{StaticResource MaterialDesignFlatButton}" 
+  Value="100" Margin="0,0,5,29" Grid.Column="3" Height="52" VerticalAlignment="Bottom" />
+                    <Button Width="Auto" Height="Auto" Grid.Column="3"   Style="{StaticResource MaterialDesignFlatButton}" 
                         Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
-                        CommandParameter="{x:Static Dock.Right}">
+                        CommandParameter="{x:Static Dock.Right}" Grid.ColumnSpan="2" Margin="125,0,10,0">
                         <materialDesign:PackIcon HorizontalAlignment="Center" VerticalAlignment="Center" Kind="PlaylistEdit" Height="40" Width="35" Foreground="White" />
                     </Button>
                 </Grid>

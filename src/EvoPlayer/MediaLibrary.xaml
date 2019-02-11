@@ -16,8 +16,8 @@
         Title="EvoPlayer - Media Libary" Height="672" Width="828" WindowStartupLocation="CenterScreen" WindowState="Maximized">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="113*"/>
-            <ColumnDefinition Width="297*"/>
+            <ColumnDefinition Width="21*"/>
+            <ColumnDefinition Width="61*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="32*"/>
@@ -48,32 +48,32 @@
         </materialDesign:ColorZone>
 
         <!--Left Pane-->
-        <TreeView x:Name="trvMLLoc" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"    Grid.Column="0" Grid.Row="1"  MinWidth="220" >
-            <TreeViewItem Header="Local">
+        <TreeView x:Name="trvMLLoc" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"    Grid.Column="0" Grid.Row="1"  MinWidth="210" Margin="0,0,10,0" >
+            <TreeViewItem Header="Local" IsExpanded="True">
                 <TreeViewItem.Items>
-                    <TreeViewItem x:Name="trviMusic">
+                    <TreeViewItem x:Name="trviMusic" IsExpanded="True">
                         <TreeViewItem.Header>
                             <StackPanel Orientation="Horizontal">
-                                <Viewbox Width="16" Height="16">
+                                <Viewbox Width="32" Height="32">
                                     <materialDesign:PackIcon Kind="Music" />
                                 </Viewbox>
-                                <TextBlock Margin="8 0 0 0">Music</TextBlock>
+                                <TextBlock Margin="8 8 0 0">Music</TextBlock>
                             </StackPanel>
                         </TreeViewItem.Header>
                     </TreeViewItem>
-                    <TreeViewItem x:Name="trviPlaylist">
+                    <TreeViewItem x:Name="trviPlaylist" IsExpanded="True">
                         <TreeViewItem.Header>
                             <StackPanel Orientation="Horizontal">
-                                <Viewbox Width="16" Height="16">
+                                <Viewbox Width="32" Height="32">
                                     <materialDesign:PackIcon Kind="PlaylistEdit" />
                                 </Viewbox>
-                                <TextBlock Margin="8 0 0 0">Playlist</TextBlock>
+                                <TextBlock Margin="8 8 0 0">Playlist</TextBlock>
                             </StackPanel>
                         </TreeViewItem.Header>
                     </TreeViewItem>
                 </TreeViewItem.Items>
             </TreeViewItem>
-            <TreeViewItem x:Name="trviNetwork" Header="Network">
+            <TreeViewItem x:Name="trviNetwork" Header="Network" IsExpanded="True">
 
             </TreeViewItem>
 
