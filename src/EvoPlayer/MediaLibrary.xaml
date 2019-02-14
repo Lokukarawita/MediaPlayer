@@ -28,17 +28,11 @@
   Padding="16" Grid.ColumnSpan="2" Height="58">
             <DockPanel>
                 <materialDesign:PopupBox      DockPanel.Dock="Right"      PlacementMode="BottomAndAlignRightEdges">
-                    <ListBox>
-                        <ListBoxItem>
-                            Hello World
-                        </ListBoxItem>
-                        <ListBoxItem>
-                            Nice Popup
-                        </ListBoxItem>
-                        <ListBoxItem>
-                            Goodbye.
-                        </ListBoxItem>
-                    </ListBox>
+                    <StackPanel>
+                        <Button Name="btnAddFiles">Add Files</Button>
+                        <Separator />
+                        <Button Name="btnNewPlaylist">New Playlist</Button>
+                    </StackPanel>
                 </materialDesign:PopupBox>
                 <StackPanel
       Orientation="Horizontal">

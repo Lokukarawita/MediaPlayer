@@ -15,6 +15,7 @@ using EvoInc.Net.UPnP.Discovery;
 using ParkSquare.UPnP;
 using System.Collections.Concurrent;
 using System.Windows.Threading;
+using EvoPlayer.Core.Data;
 
 namespace EvoPlayer
 {
@@ -29,10 +30,17 @@ namespace EvoPlayer
         private ConcurrentDictionary<string, Device> currentDeviceList;
         private DispatcherTimer tmrNewDeviceQueue;
 
+        private bool shutDownRequested = false;
+
         public MediaLibrary()
         {
             InitializeComponent();
 
+            InitMediaLibrary();
+        }
+
+        private void InitMediaLibrary()
+        {
             //event
             this.Closing += MediaLibrary_Closing;
 
@@ -53,6 +61,16 @@ namespace EvoPlayer
 
             tmrNewDeviceQueue.Start();
             netssdp.StartAsync();
+
+            //playlists
+            var plists =  DB.GetPlaylists();
+            foreach (var item in plists)
+            {
+                TreeViewItem trviPli = new TreeViewItem();
+                trviPli.Header = item.PlaylistName;
+                trviPli.Tag = item.Id;
+                trviPlaylist.Items.Add(trviPli);
+            }
         }
 
         private void TmrNewDeviceQueue_Tick(object sender, EventArgs e)
@@ -151,8 +169,17 @@ namespace EvoPlayer
 
         private void MediaLibrary_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            tmrNewDeviceQueue.Stop();
-            netssdp.Stop();
+
+            if (!shutDownRequested)
+            {
+                e.Cancel = true;
+                if (this.IsVisible) this.Hide();
+            }
+            else
+            {
+                tmrNewDeviceQueue.Stop();
+                netssdp.Stop();
+            }
         }
 
         private void Netssdp_DeviceStatusUpdate(object sender, DiscoveredEventArgs e)
@@ -175,5 +202,13 @@ namespace EvoPlayer
                 }
             }
         }
+
+
+        public void ShutDown()
+        {
+            shutDownRequested = true;
+            this.Close();
+        }
+
     }
 }
