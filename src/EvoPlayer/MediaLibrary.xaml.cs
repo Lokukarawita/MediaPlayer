@@ -16,6 +16,7 @@ using ParkSquare.UPnP;
 using System.Collections.Concurrent;
 using System.Windows.Threading;
 using EvoPlayer.Core.Data;
+using MaterialDesignThemes.Wpf;
 
 namespace EvoPlayer
 {
@@ -210,5 +211,18 @@ namespace EvoPlayer
             this.Close();
         }
 
+        private async void mnuCreatePlaylist_Click(object sender, RoutedEventArgs e)
+        {
+            //DialogHost.
+            //DialogClosing = "Sample1_DialogHost_OnDialogClosing"
+            // dlgCreatePL.IsOpen = true;
+
+            var dialogContent = new TextBlock
+            {
+                Text = "Dynamic Dialog!",
+                Margin = new Thickness(20)
+            };
+            await MaterialDesignThemes.Wpf.DialogHost.Show(dialogContent, "dlgCreatePL");
+        }
     }
 }

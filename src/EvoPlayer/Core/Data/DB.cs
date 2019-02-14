@@ -68,7 +68,20 @@ namespace EvoPlayer.Core.Data
             using (LiteDatabase db = new LiteDatabase(DB_PATH))
             {
                 var cPLists = db.GetCollection<Playlist>(C_PL_LISTS);
-                return cPLists.FindById(id);
+                return cPLists.Include(x => x.Entries).FindById(id);
+            }
+        }
+        public static void CreatePlaylist(string name)
+        {
+            CreatePlaylist(name, new List<PlaylistEntry>());
+        }
+        public static void CreatePlaylist(string name, List<PlaylistEntry> entries)
+        {
+            using (LiteDatabase db = new LiteDatabase(DB_PATH))
+            {
+                var pl = new Playlist() { PlaylistName = name };
+                pl.Entries.AddRange(entries);
+                db.GetCollection<Playlist>().Insert(pl);
             }
         }
     }
