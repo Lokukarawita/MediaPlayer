@@ -15,96 +15,89 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
         Title="EvoPlayer - Media Libary" Height="672" Width="828" WindowStartupLocation="CenterScreen" WindowState="Maximized">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="21*"/>
-            <ColumnDefinition Width="61*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="32*"/>
-            <RowDefinition Height="289*"/>
-        </Grid.RowDefinitions>
-        <materialDesign:ColorZone
-  Mode="PrimaryDark"
-  Padding="16" Grid.ColumnSpan="2" Height="58">
-            <DockPanel>
-                <materialDesign:PopupBox      DockPanel.Dock="Right"      PlacementMode="BottomAndAlignRightEdges">
-                    <StackPanel>
-                        <Button Name="btnAddFiles">Add Files</Button>
-                        <Separator />
-                        <Button Name="btnNewPlaylist" Click="mnuCreatePlaylist_Click">New Playlist</Button>
-                    </StackPanel>
-                </materialDesign:PopupBox>
-                <StackPanel
-      Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Margin="16 0 0 0">Media Library</TextBlock>
+    <materialDesign:DialogHost x:Name="dlgCreatePL" Identifier="dlgCreatePL" DialogClosing="dlgCreatePL_DialogClosing">
+        <materialDesign:DialogHost.DialogContent>
+            <StackPanel Margin="16">
+                <TextBlock>Crate playlist:</TextBlock>
+                <TextBox Margin="0 8 0 0" HorizontalAlignment="Stretch" x:Name="txtNewPlaylistName" />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                    <Button Style="{StaticResource MaterialDesignFlatButton}" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
+                        <Button.CommandParameter>
+                            <s:Boolean>True</s:Boolean>
+                        </Button.CommandParameter>
+                        ACCEPT
+                    </Button>
+                    <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                        IsCancel="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
+                        <Button.CommandParameter>
+                            <s:Boolean>False</s:Boolean>
+                        </Button.CommandParameter>
+                        CANCEL
+                    </Button>
                 </StackPanel>
-            </DockPanel>
-        </materialDesign:ColorZone>
+            </StackPanel>
+        </materialDesign:DialogHost.DialogContent>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="21*"/>
+                <ColumnDefinition Width="61*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32*"/>
+                <RowDefinition Height="289*"/>
+            </Grid.RowDefinitions>
+            <materialDesign:ColorZone Mode="PrimaryDark" Padding="16" Grid.ColumnSpan="2" Height="58">
+                <DockPanel>
+                    <materialDesign:PopupBox      DockPanel.Dock="Right"      PlacementMode="BottomAndAlignRightEdges">
+                        <StackPanel>
+                            <Button Name="btnAddFiles">Add Files</Button>
+                            <Separator />
+                            <Button Name="btnNewPlaylist" Click="mnuCreatePlaylist_Click">New Playlist</Button>
+                        </StackPanel>
+                    </materialDesign:PopupBox>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Margin="16 0 0 0">Media Library</TextBlock>
+                    </StackPanel>
+                </DockPanel>
+            </materialDesign:ColorZone>
 
-        <!--Left Pane-->
-        <TreeView x:Name="trvMLLoc" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"    Grid.Column="0" Grid.Row="1"  MinWidth="210" Margin="0,0,10,0" >
-            <TreeViewItem Header="Local" IsExpanded="True">
-                <TreeViewItem.Items>
-                    <TreeViewItem x:Name="trviMusic" IsExpanded="True">
-                        <TreeViewItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <Viewbox Width="32" Height="32">
-                                    <materialDesign:PackIcon Kind="Music" />
-                                </Viewbox>
-                                <TextBlock Margin="8 8 0 0">Music</TextBlock>
-                            </StackPanel>
-                        </TreeViewItem.Header>
-                    </TreeViewItem>
-                    <TreeViewItem x:Name="trviPlaylist" IsExpanded="True">
-                        <!--<TreeViewItem.ContextMenu>
+            <!--Left Pane-->
+            <TreeView x:Name="trvMLLoc" VerticalAlignment="Stretch" SelectedItemChanged="trvMLLoc_SelectedItemChanged" HorizontalAlignment="Stretch"    Grid.Column="0" Grid.Row="1"  MinWidth="210" Margin="0,0,10,0" >
+                <TreeViewItem Header="Local" IsExpanded="True">
+                    <TreeViewItem.Items>
+                        <TreeViewItem x:Name="trviMusic" IsExpanded="True">
+                            <TreeViewItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <Viewbox Width="32" Height="32">
+                                        <materialDesign:PackIcon Kind="Music" />
+                                    </Viewbox>
+                                    <TextBlock Margin="8 8 0 0">Music</TextBlock>
+                                </StackPanel>
+                            </TreeViewItem.Header>
+                        </TreeViewItem>
+                        <TreeViewItem x:Name="trviPlaylist" IsExpanded="True">
+                            <!--<TreeViewItem.ContextMenu>
                             <ContextMenu>
                                 <MenuItem x:Name="mnuCreatePlaylist" Click="mnuCreatePlaylist_Click" Header="Create" />
                             </ContextMenu>
                         </TreeViewItem.ContextMenu>-->
-                        <TreeViewItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <Viewbox Width="32" Height="32">
-                                    <materialDesign:PackIcon Kind="PlaylistEdit" />
-                                </Viewbox>
-                                <TextBlock Margin="8 8 0 0">Playlist</TextBlock>
-                            </StackPanel>
-                        </TreeViewItem.Header>
-                    </TreeViewItem>
-                </TreeViewItem.Items>
-            </TreeViewItem>
-            <TreeViewItem x:Name="trviNetwork" Header="Network" IsExpanded="True">
-            </TreeViewItem>
-        </TreeView>
-
-        <materialDesign:DialogHost Identifier="dlgCreatePL" CloseOnClickAway="False"  x:Name="dlgCreatePL" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <materialDesign:DialogHost.DialogContent>
-                <StackPanel Margin="16">
-                    <TextBlock>Crate playlist:</TextBlock>
-                    <TextBox Margin="0 8 0 0" HorizontalAlignment="Stretch" x:Name="txtNewPlaylistName" />
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
-                        <Button Style="{StaticResource MaterialDesignFlatButton}"
-                                        IsDefault="True"
-                                        Margin="0 8 8 0"
-                                        Command="materialDesign:DialogHost.CloseDialogCommand">
-                            <Button.CommandParameter>
-                                <s:Boolean>True</s:Boolean>
-                            </Button.CommandParameter>
-                            ACCEPT
-                        </Button>
-                        <Button Style="{StaticResource MaterialDesignFlatButton}"
-                                        IsCancel="True"
-                                        Margin="0 8 8 0"
-                                        Command="materialDesign:DialogHost.CloseDialogCommand">
-                            <Button.CommandParameter>
-                                <s:Boolean>False</s:Boolean>
-                            </Button.CommandParameter>
-                            CANCEL
-                        </Button>
-                    </StackPanel>
-                </StackPanel>
-            </materialDesign:DialogHost.DialogContent>
-        </materialDesign:DialogHost>
-
-    </Grid>
+                            <TreeViewItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <Viewbox Width="32" Height="32">
+                                        <materialDesign:PackIcon Kind="PlaylistEdit" />
+                                    </Viewbox>
+                                    <TextBlock Margin="8 8 0 0">Playlist</TextBlock>
+                                </StackPanel>
+                            </TreeViewItem.Header>
+                        </TreeViewItem>
+                    </TreeViewItem.Items>
+                </TreeViewItem>
+                <TreeViewItem x:Name="trviNetwork" Header="Network" IsExpanded="True">
+                </TreeViewItem>
+            </TreeView>
+            <StackPanel x:Name="ctrlView" Grid.Column="1" Grid.Row="1" Margin="0">
+                
+            </StackPanel>
+        </Grid>
+    </materialDesign:DialogHost>
 </Window>

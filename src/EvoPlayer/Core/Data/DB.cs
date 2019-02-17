@@ -71,17 +71,32 @@ namespace EvoPlayer.Core.Data
                 return cPLists.Include(x => x.Entries).FindById(id);
             }
         }
-        public static void CreatePlaylist(string name)
+        public static int CreatePlaylist(string name)
         {
-            CreatePlaylist(name, new List<PlaylistEntry>());
+            return CreatePlaylist(name, new List<PlaylistEntry>());
         }
-        public static void CreatePlaylist(string name, List<PlaylistEntry> entries)
+        public static int CreatePlaylist(string name, List<PlaylistEntry> entries)
         {
             using (LiteDatabase db = new LiteDatabase(DB_PATH))
             {
                 var pl = new Playlist() { PlaylistName = name };
                 pl.Entries.AddRange(entries);
-                db.GetCollection<Playlist>().Insert(pl);
+                var col = db.GetCollection<Playlist>(C_PL_LISTS);
+                var value = col.Insert(pl).AsInt32;
+                return value;
+            }
+        }
+        public static void SavePlaylist(Playlist pl)
+        {
+            using (LiteDatabase db = new LiteDatabase(DB_PATH))
+            {
+                foreach (var item in pl.Entries)
+                {
+                    var ple = db.GetCollection<PlaylistEntry>(C_PL_ENTRIES);
+                    ple.Upsert(item);
+                }
+                var col = db.GetCollection<Playlist>(C_PL_LISTS);
+                col.Upsert(pl);
             }
         }
     }

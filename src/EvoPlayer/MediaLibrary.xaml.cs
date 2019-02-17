@@ -17,6 +17,7 @@ using System.Collections.Concurrent;
 using System.Windows.Threading;
 using EvoPlayer.Core.Data;
 using MaterialDesignThemes.Wpf;
+using EvoPlayer.Core.Data.Domain;
 
 namespace EvoPlayer
 {
@@ -31,7 +32,9 @@ namespace EvoPlayer
         private ConcurrentDictionary<string, Device> currentDeviceList;
         private DispatcherTimer tmrNewDeviceQueue;
 
+        //ops
         private bool shutDownRequested = false;
+        private object currentView = null;
 
         public MediaLibrary()
         {
@@ -64,15 +67,14 @@ namespace EvoPlayer
             netssdp.StartAsync();
 
             //playlists
-            var plists =  DB.GetPlaylists();
+            var plists = DB.GetPlaylists();
             foreach (var item in plists)
             {
-                TreeViewItem trviPli = new TreeViewItem();
-                trviPli.Header = item.PlaylistName;
-                trviPli.Tag = item.Id;
-                trviPlaylist.Items.Add(trviPli);
+                MLTree_AddPlaylistItem(item);
             }
         }
+
+
 
         private void TmrNewDeviceQueue_Tick(object sender, EventArgs e)
         {
@@ -85,7 +87,7 @@ namespace EvoPlayer
                     {
                         if (currentDeviceList.TryAdd(d.Udn, d))
                         {
-                            AddDeviceToTree(d);
+                            MLTree_AddNetworkItem(d);
                         }
                     }
                 }
@@ -110,7 +112,46 @@ namespace EvoPlayer
             }
         }
 
-        private void AddDeviceToTree(Device device)
+        private void MediaLibrary_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+            if (!shutDownRequested)
+            {
+                e.Cancel = true;
+                if (this.IsVisible) this.Hide();
+            }
+            else
+            {
+                tmrNewDeviceQueue.Stop();
+                netssdp.Stop();
+            }
+        }
+
+        private void Netssdp_DeviceStatusUpdate(object sender, DiscoveredEventArgs e)
+        {
+            if (e.Event == DiscoveryEvent.DeviceFound)
+            {
+                SimpleHttpClient client = new SimpleHttpClient();
+                DeviceFactory factory = new DeviceFactory(client);
+
+                var device = factory.Create(new Uri(e.Device.Location));
+                if (device == null)
+                {
+                    return;
+                }
+
+
+                if (device != null)
+                {
+                    newdeviceQueue.Enqueue(device);
+                }
+            }
+        }
+
+
+
+
+        private void MLTree_AddNetworkItem(Device device)
         {
             var model = device.ModelName;
             //var group = GetGroup(device.ModelName);
@@ -166,43 +207,50 @@ namespace EvoPlayer
 
             trviNetwork.Items.Add(item);
         }
-
-
-        private void MediaLibrary_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void MLTree_AddPlaylistItem(Playlist pl)
         {
-
-            if (!shutDownRequested)
-            {
-                e.Cancel = true;
-                if (this.IsVisible) this.Hide();
-            }
-            else
-            {
-                tmrNewDeviceQueue.Stop();
-                netssdp.Stop();
-            }
+            TreeViewItem trviPli = new TreeViewItem();
+            trviPli.Header = pl.PlaylistName;
+            trviPli.Tag = pl.Id;
+            trviPlaylist.Items.Add(trviPli);
         }
 
-        private void Netssdp_DeviceStatusUpdate(object sender, DiscoveredEventArgs e)
+
+
+        private void mnuCreatePlaylist_Click(object sender, RoutedEventArgs e)
         {
-            if (e.Event == DiscoveryEvent.DeviceFound)
+            dlgCreatePL.IsOpen = true;
+        }
+
+        private void dlgCreatePL_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
+            try
             {
-                SimpleHttpClient client = new SimpleHttpClient();
-                DeviceFactory factory = new DeviceFactory(client);
-
-                var device = factory.Create(new Uri(e.Device.Location));
-                if (device == null)
+                var param = (bool)eventArgs.Parameter;
+                if (param)
                 {
-                    return;
-                }
-
-
-                if (device != null)
-                {
-                    newdeviceQueue.Enqueue(device);
+                    var name = txtNewPlaylistName.Text;
+                    if (!string.IsNullOrWhiteSpace(name))
+                    {
+                        var newId = DB.CreatePlaylist(name);
+                        var pl = DB.GetPlaylist(newId);
+                        MLTree_AddPlaylistItem(pl);
+                        //trviPlaylist.Items.Add()
+                    }
                 }
             }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                txtNewPlaylistName.Text = "";
+            }
+
         }
+
 
 
         public void ShutDown()
@@ -211,18 +259,37 @@ namespace EvoPlayer
             this.Close();
         }
 
-        private async void mnuCreatePlaylist_Click(object sender, RoutedEventArgs e)
+        private void trvMLLoc_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            //DialogHost.
-            //DialogClosing = "Sample1_DialogHost_OnDialogClosing"
-            // dlgCreatePL.IsOpen = true;
+            TreeViewItem tvSelected = null, tvParent = null;
 
-            var dialogContent = new TextBlock
+            if (e.NewValue != null)
             {
-                Text = "Dynamic Dialog!",
-                Margin = new Thickness(20)
-            };
-            await MaterialDesignThemes.Wpf.DialogHost.Show(dialogContent, "dlgCreatePL");
+                if (e.NewValue.GetType() == typeof(TreeViewItem))
+                {
+                    tvSelected = e.NewValue as TreeViewItem;
+                    if (tvSelected.Parent != null)
+                    {
+                        tvParent = tvSelected.Parent as TreeViewItem;
+                    }
+                }
+            }
+            //-- validate --
+            if (tvParent == null)
+                return;
+
+            ctrlView.Children.Clear();
+
+            //-- process --
+            if(tvParent.Name== "trviPlaylist")
+            {
+                var plId = (int)tvSelected.Tag;
+                var playlist = DB.GetPlaylist(plId);
+
+                var playlistView = new Comp.ML.MLPlaylistView(playlist);
+                this.currentView = playlistView;
+                ctrlView.Children.Add(playlistView);
+            }
         }
     }
 }
