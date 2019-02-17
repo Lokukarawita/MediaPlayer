@@ -86,7 +86,7 @@ namespace EvoPlayer.Core.Data
                 return value;
             }
         }
-        public static void SavePlaylist(Playlist pl)
+        public static Playlist SavePlaylist(Playlist pl)
         {
             using (LiteDatabase db = new LiteDatabase(DB_PATH))
             {
@@ -97,7 +97,21 @@ namespace EvoPlayer.Core.Data
                 }
                 var col = db.GetCollection<Playlist>(C_PL_LISTS);
                 col.Upsert(pl);
+
+                return GetPlaylist(pl.Id);
             }
+        }
+        public static void DeletePlaylist(int plId)
+        {
+            using (LiteDatabase db = new LiteDatabase(DB_PATH))
+            {
+                var col = db.GetCollection<Playlist>(C_PL_LISTS);
+                col.Delete(plId);
+            }
+        }
+        public static void DeletePlaylistEntry(int entryId)
+        {
+
         }
     }
 }

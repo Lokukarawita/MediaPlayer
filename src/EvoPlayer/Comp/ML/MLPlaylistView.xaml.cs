@@ -22,6 +22,7 @@ namespace EvoPlayer.Comp.ML
 
         private void InitPlaylist()
         {
+            this.litems.Clear();
             this.lstvItems.ItemsSource = litems;
             foreach (var item in currentPL.Entries)
             {
@@ -32,17 +33,33 @@ namespace EvoPlayer.Comp.ML
 
         public void AddItems(List<PlaylistEntry> entries)
         {
-            foreach (var item in entries)
+            entries.ForEach(x => { x.Playlist = currentPL; });
+            currentPL.Entries.AddRange(entries);
+            currentPL = DB.SavePlaylist(currentPL);
+            InitPlaylist();
+        }
+
+        private void mnuRemoveItem_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if(lstvItems.SelectedItems.Count > 0)
             {
-                item.Playlist = currentPL;
-                currentPL.Entries.Add(item);
+                var selected = (MLPlayListEntry[])lstvItems.SelectedItem;
+                foreach (var item in selected)
+                {
+                    DB.DeletePlaylistEntry(item.Entry.Id);
+                }
 
-
-                var uiitem = new MLPlayListEntry(item);
-                litems.Add(uiitem);
+                currentPL = DB.GetPlaylist(currentPL.Id);
+                InitPlaylist();
             }
+        }
 
-            DB.SavePlaylist(currentPL);
+        private void lstvItems_PreviewMouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (lstvItems.SelectedItem == null)
+                lstvItems.ContextMenu.IsEnabled = false;
+            else
+                lstvItems.ContextMenu.IsEnabled = true;
         }
 
         public class MLPlayListEntry

@@ -9,6 +9,11 @@
 
     <Grid Margin="0">
         <ListView x:Name="lstvItems" Grid.Column="0" Grid.Row="0" Margin="0">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem x:Name="mnuRemoveItem" Header="Remove" Click="mnuRemoveItem_Click" />
+                </ContextMenu>
+            </ListView.ContextMenu>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Title" Width="200" DisplayMemberBinding="{Binding Title}" />

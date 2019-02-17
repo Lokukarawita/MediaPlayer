@@ -76,11 +76,11 @@
                             </TreeViewItem.Header>
                         </TreeViewItem>
                         <TreeViewItem x:Name="trviPlaylist" IsExpanded="True">
-                            <!--<TreeViewItem.ContextMenu>
+                            <TreeViewItem.ContextMenu>
                             <ContextMenu>
                                 <MenuItem x:Name="mnuCreatePlaylist" Click="mnuCreatePlaylist_Click" Header="Create" />
                             </ContextMenu>
-                        </TreeViewItem.ContextMenu>-->
+                        </TreeViewItem.ContextMenu>
                             <TreeViewItem.Header>
                                 <StackPanel Orientation="Horizontal">
                                     <Viewbox Width="32" Height="32">

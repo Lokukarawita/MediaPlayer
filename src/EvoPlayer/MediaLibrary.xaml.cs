@@ -209,13 +209,50 @@ namespace EvoPlayer
         }
         private void MLTree_AddPlaylistItem(Playlist pl)
         {
+            ContextMenu menu = new ContextMenu();
+            var menuPLDelete = new MenuItem();
+            menuPLDelete.Header = "Delete";
+            menuPLDelete.Click += MenuPLDelete_Click;
+            menuPLDelete.Tag = pl.Id;
+            menu.Items.Add(menuPLDelete);
+
             TreeViewItem trviPli = new TreeViewItem();
             trviPli.Header = pl.PlaylistName;
             trviPli.Tag = pl.Id;
+            trviPli.ContextMenu = menu;
             trviPlaylist.Items.Add(trviPli);
         }
 
 
+        private void MenuPLDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (trvMLLoc.SelectedItem != null)
+            {
+                var tvi = (TreeViewItem)trvMLLoc.SelectedItem;
+                var tvp = (TreeViewItem)(tvi.Parent != null ? tvi.Parent : null);
+                if (tvi.Tag != null && tvi.Header.ToString() != "Now Playing" && tvp != null && tvp.Name == nameof(trviPlaylist))
+                {
+                    var plId = (int)tvi.Tag;
+
+                    var rslt = MessageBox.Show(this, "Delete playlist " + tvi.Header + " ?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (rslt == MessageBoxResult.Yes)
+                    {
+                        DB.DeletePlaylist(plId);
+
+                        for (int i = 0; i < trviPlaylist.Items.Count; i++)
+                        {
+                            var trvi = (TreeViewItem)trviPlaylist.Items[i];
+                            var id = (int)trvi.Tag;
+                            if (id == plId)
+                            {
+                                trviPlaylist.Items.Remove(trvi);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         private void mnuCreatePlaylist_Click(object sender, RoutedEventArgs e)
         {
@@ -241,8 +278,7 @@ namespace EvoPlayer
             }
             catch (Exception)
             {
-
-                throw;
+                
             }
             finally
             {
@@ -281,7 +317,7 @@ namespace EvoPlayer
             ctrlView.Children.Clear();
 
             //-- process --
-            if(tvParent.Name== "trviPlaylist")
+            if (tvParent.Name == "trviPlaylist")
             {
                 var plId = (int)tvSelected.Tag;
                 var playlist = DB.GetPlaylist(plId);
