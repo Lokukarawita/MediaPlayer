@@ -326,6 +326,12 @@ namespace EvoPlayer
                 this.currentView = playlistView;
                 ctrlView.Children.Add(playlistView);
             }
+            else if (tvSelected.Name == "trviMusic")
+            {
+                var lmv = new Comp.ML.MLLocalMediaView();
+                this.currentView = lmv;
+                ctrlView.Children.Add(lmv);
+            }
         }
     }
 }

@@ -111,6 +111,11 @@ namespace EvoPlayer.Core.Data
         }
         public static void DeletePlaylistEntry(int entryId)
         {
+            using (LiteDatabase db = new LiteDatabase(DB_PATH))
+            {
+                var col = db.GetCollection<PlaylistEntry>(C_PL_ENTRIES);
+                col.Delete(entryId);
+            }
 
         }
     }
