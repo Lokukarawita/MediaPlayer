@@ -23,6 +23,17 @@ namespace EvoPlayer.Comp.ML
         public MLLocalMediaView()
         {
             InitializeComponent();
+            //Random rnd = new Random();
+            //for (int i = 0; i < 100; i++)
+            //{
+            //    lstLocalArtist.Items.Add(rnd.Next());
+            //    lstLocalAlbums.Items.Add(rnd.Next());
+            //}
+
+
+        
+
+
         }
     }
 }

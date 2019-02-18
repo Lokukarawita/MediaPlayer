@@ -9,5 +9,7 @@ namespace EvoPlayer.Core.Data.Domain
     public class LocalMediaItem : MediaItem
     {
         public int Id { get; set; }
+
+        public bool HasAlbumArt { get; set; }
     }
 }

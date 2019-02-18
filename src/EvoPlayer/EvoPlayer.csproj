@@ -53,6 +53,10 @@
       <HintPath>..\packages\ParkSquare.UPnP.1.0.1\lib\net452\ParkSquare.UPnP.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="policy.2.0.taglib-sharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
+      <HintPath>..\packages\taglib.2.1.0.0\lib\policy.2.0.taglib-sharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -63,6 +67,10 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="taglib-sharp, Version=2.1.0.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
+      <HintPath>..\packages\taglib.2.1.0.0\lib\taglib-sharp.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -102,6 +110,9 @@
     <Compile Include="Core\Data\Domain\MediaStorageType.cs" />
     <Compile Include="Core\Data\Domain\Playlist.cs" />
     <Compile Include="Core\Data\Domain\PlaylistEntry.cs" />
+    <Compile Include="Core\IO\SearchCompletedEventArgs.cs" />
+    <Compile Include="Core\IO\SearchLocalDisk.cs" />
+    <Compile Include="Core\IO\SearchProgressEventArgs.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

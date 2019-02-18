@@ -45,12 +45,16 @@
                 <ColumnDefinition Width="3*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="2*" />
+                <RowDefinition Height="3*" />
                 <RowDefinition Height="3*" />
             </Grid.RowDefinitions>
 
-            <ListView Grid.Column="0" Grid.Row="0" x:Name="lstLocalArtist"></ListView>
-            <ListView Grid.Column="1" Grid.Row="0" x:Name="lstLocalAlbums"></ListView>
+            <ListView Grid.Column="0" Grid.Row="0" x:Name="lstLocalArtist">
+                
+            </ListView>
+            <ListView Grid.Column="1" Grid.Row="0" x:Name="lstLocalAlbums">
+                
+            </ListView>
             <ListView Grid.ColumnSpan="2" Grid.Row="1" x:Name="lstLocalTracks">
                 <ListView.View>
                     <GridView>

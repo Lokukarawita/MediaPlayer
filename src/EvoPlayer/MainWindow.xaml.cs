@@ -29,6 +29,23 @@ namespace EvoPlayer
             this.Closing += MainWindow_Closing;
 
             _ml = new MediaLibrary();
+
+
+            Core.IO.SearchLocalDisk disk = new Core.IO.SearchLocalDisk();
+            disk.SearchProgress += Disk_SearchProgress;
+            disk.SearchCompleted += Disk_SearchCompleted;
+            MessageBox.Show("Test");
+            disk.Search(@"D:\Songs\A\English", Core.Data.AppSettings.ALL_SUPPORTED_EXTENTIONS);
+        }
+
+        private void Disk_SearchCompleted(object sender, Core.IO.SearchCompletedEventArgs e)
+        {
+            Console.WriteLine("Found " + e.FoundFiles.Count);
+        }
+
+        private void Disk_SearchProgress(object sender, Core.IO.SearchProgressEventArgs e)
+        {
+            Console.WriteLine("Searching " + e.CurrentDirectory + ", Found " + e.FoundFiles.Count);
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -43,9 +60,9 @@ namespace EvoPlayer
 
         private void btnML_Click(object sender, RoutedEventArgs e)
         {
-            if(_ml != null)
+            if (_ml != null)
             {
-                if(_ml.IsVisible && !_ml.IsActive)
+                if (_ml.IsVisible && !_ml.IsActive)
                 {
                     _ml.Focus();
                 }
