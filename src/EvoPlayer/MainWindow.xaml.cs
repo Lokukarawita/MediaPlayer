@@ -29,13 +29,6 @@ namespace EvoPlayer
             this.Closing += MainWindow_Closing;
 
             _ml = new MediaLibrary();
-
-
-            Core.IO.SearchLocalDisk disk = new Core.IO.SearchLocalDisk();
-            disk.SearchProgress += Disk_SearchProgress;
-            disk.SearchCompleted += Disk_SearchCompleted;
-            MessageBox.Show("Test");
-            disk.Search(@"D:\Songs\A\English", Core.Data.AppSettings.ALL_SUPPORTED_EXTENTIONS);
         }
 
         private void Disk_SearchCompleted(object sender, Core.IO.SearchCompletedEventArgs e)

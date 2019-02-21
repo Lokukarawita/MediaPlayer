@@ -17,11 +17,11 @@ namespace EvoPlayer.Core.IO
         public event EventHandler<SearchCompletedEventArgs> SearchCompleted;
         public event EventHandler<SearchProgressEventArgs> SearchProgress;
 
-
         public SearchLocalDisk()
         {
 
         }
+
 
         private void OnSearchProgress(string directory, List<string> found, Queue<string> subdir, List<string> failedDir)
         {
@@ -54,6 +54,7 @@ namespace EvoPlayer.Core.IO
                 uidisp.Invoke(SearchCompleted, this, evt);
             }
         }
+
 
         private List<string> DoSearch(string directory, string[] filters, List<string> found, Queue<string> subdir, List<string> failedDir, int dircount)
         {
@@ -96,6 +97,7 @@ namespace EvoPlayer.Core.IO
             if (subdir.Count == 0)
             {
                 OnSearchCompleted(directory, found, subdir, failedDir, dircount);
+                IsSearching = false;
                 return found;
             }
             else
@@ -106,7 +108,6 @@ namespace EvoPlayer.Core.IO
         }
 
 
-
         public void Search(string path, string[] filters)
         {
             uidisp = Application.Current.Dispatcher;
@@ -114,6 +115,7 @@ namespace EvoPlayer.Core.IO
             this.filters = filters;
             Task.Factory.StartNew(() =>
             {
+                IsSearching = true;
                 DoSearch(
                     startingDir,
                     this.filters,
@@ -123,5 +125,8 @@ namespace EvoPlayer.Core.IO
                     1);
             });
         }
+
+        public bool IsSearching { get; private set; }
+
     }
 }

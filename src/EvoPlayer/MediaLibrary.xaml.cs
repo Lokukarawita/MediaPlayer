@@ -333,5 +333,15 @@ namespace EvoPlayer
                 ctrlView.Children.Add(lmv);
             }
         }
+
+
+
+        private void btnAddFiles_Click(object sender, RoutedEventArgs e)
+        {
+            FileAdder adder = new FileAdder();
+            adder.Owner = this;
+            adder.ShowInTaskbar = false;
+            adder.Show();
+        }
     }
 }

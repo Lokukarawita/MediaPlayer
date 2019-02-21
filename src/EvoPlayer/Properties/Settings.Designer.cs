@@ -22,5 +22,17 @@ namespace EvoPlayer.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\")]
+        public string LastSearchLocation {
+            get {
+                return ((string)(this["LastSearchLocation"]));
+            }
+            set {
+                this["LastSearchLocation"] = value;
+            }
+        }
     }
 }

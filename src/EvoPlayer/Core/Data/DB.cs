@@ -16,7 +16,7 @@ namespace EvoPlayer.Core.Data
         private static string C_PL_ENTRIES = "pl_entries";
 
 
-        private static string DB_PATH = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EvoPlayer.db");
+        private static string DB_PATH = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EvoPlayer.edb");
 
 
         static DB()
@@ -117,6 +117,16 @@ namespace EvoPlayer.Core.Data
                 col.Delete(entryId);
             }
 
+        }
+
+
+        public static void AddLocalMedia(LocalMediaItem localMI)
+        {
+            using (LiteDatabase db = new LiteDatabase(DB_PATH))
+            {
+                var col = db.GetCollection<LocalMediaItem>(C_ML_MLITEMS);
+                col.Upsert(localMI);
+            }
         }
     }
 }

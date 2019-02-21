@@ -50,7 +50,7 @@
                 <DockPanel>
                     <materialDesign:PopupBox      DockPanel.Dock="Right"      PlacementMode="BottomAndAlignRightEdges">
                         <StackPanel>
-                            <Button Name="btnAddFiles">Add Files</Button>
+                            <Button Name="btnAddFiles" Click="btnAddFiles_Click">Add Files</Button>
                             <Separator />
                             <Button Name="btnNewPlaylist" Click="mnuCreatePlaylist_Click">New Playlist</Button>
                         </StackPanel>
