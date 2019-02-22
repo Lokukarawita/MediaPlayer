@@ -75,6 +75,9 @@ namespace EvoPlayer.Core.Data
         {
             return CreatePlaylist(name, new List<PlaylistEntry>());
         }
+
+
+
         public static int CreatePlaylist(string name, List<PlaylistEntry> entries)
         {
             using (LiteDatabase db = new LiteDatabase(DB_PATH))
@@ -126,6 +129,35 @@ namespace EvoPlayer.Core.Data
             {
                 var col = db.GetCollection<LocalMediaItem>(C_ML_MLITEMS);
                 col.Upsert(localMI);
+            }
+        }
+        public static List<string> GetLocalArtists()
+        {
+            using (LiteDatabase db = new LiteDatabase(DB_PATH))
+            {
+                var col = db.GetCollection<LocalMediaItem>(C_ML_MLITEMS);
+                var artists = col.FindAll().GroupBy(x => x.Artist).Select(g => g.First().Artist).ToList();
+                return artists;
+            }
+        }
+        public static List<LocalMediaItem> GetLocalAlbums(string artist)
+        {
+            using (LiteDatabase db = new LiteDatabase(DB_PATH))
+            {
+                var col = db.GetCollection<LocalMediaItem>(C_ML_MLITEMS);
+                var albums = col.Find(x => x.Artist == artist).GroupBy(x => x.Album).Select(g => g.First()).ToList();
+                return albums;
+            }
+        }
+        public static List<LocalMediaItem> GetLocalTracks(string artist, string albumTitle)
+        {
+            using (LiteDatabase db = new LiteDatabase(DB_PATH))
+            {
+                var col = db.GetCollection<LocalMediaItem>(C_ML_MLITEMS);
+                var tracks = col
+                    .Find(x => x.Artist == artist && x.Album == albumTitle)
+                    .ToList();
+                return tracks;
             }
         }
     }

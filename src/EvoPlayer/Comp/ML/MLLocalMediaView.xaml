@@ -39,21 +39,42 @@
         <!--<TextBox x:Name="CommentTextBox" HorizontalAlignment="Right" Width="100"  Margin="10 10" materialDesign:HintAssist.Hint="Search" />-->
         <!--
         </DockPanel>-->
-        <Grid>
+        <Grid x:Name="gridMain">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="3*"   />
                 <ColumnDefinition Width="3*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="3*" />
-                <RowDefinition Height="3*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <ListView Grid.Column="0" Grid.Row="0" x:Name="lstLocalArtist">
-                
+            <ListView x:Name="lstLocalArtist" 
+                      MaxHeight="200" 
+                      Grid.Column="0" 
+                      Grid.Row="0" 
+                      ScrollViewer.CanContentScroll="True" 
+                      ScrollViewer.VerticalScrollBarVisibility="Visible" SelectionChanged="lstLocalArtist_SelectionChanged">
+
             </ListView>
-            <ListView Grid.Column="1" Grid.Row="0" x:Name="lstLocalAlbums">
-                
+            <ListView Grid.Column="1" Grid.Row="0" x:Name="lstLocalAlbums" MaxHeight="200" 
+                      ScrollViewer.CanContentScroll="True" 
+                      ScrollViewer.VerticalScrollBarVisibility="Visible"
+                      SelectionChanged="lstLocalAlbums_SelectionChanged">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Rectangle Height="100" Width="100">
+                                <Rectangle.Fill>
+                                    <ImageBrush ImageSource="{Binding AlbumArt}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <StackPanel Orientation="Vertical" Margin="12,0,0,0">
+                                <TextBlock FontSize="14" Text="{Binding AlbumTitle}" Foreground="{DynamicResource PrimaryHueLightBrush}"  />
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
             <ListView Grid.ColumnSpan="2" Grid.Row="1" x:Name="lstLocalTracks">
                 <ListView.View>
