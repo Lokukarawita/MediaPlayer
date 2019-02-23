@@ -102,6 +102,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Comp\INotifyResize.cs" />
     <Compile Include="Comp\ML\MLLocalMediaView.xaml.cs">
       <DependentUpon>MLLocalMediaView.xaml</DependentUpon>
     </Compile>
@@ -165,7 +166,9 @@
       <Name>EvoInc.Net.UPnP</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\music_album.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\server_icon.png" />
   </ItemGroup>

@@ -234,7 +234,7 @@ namespace EvoPlayer
                 {
                     var plId = (int)tvi.Tag;
 
-                    var rslt = MessageBox.Show(this, "Delete playlist " + tvi.Header + " ?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    var rslt = MessageBox.Show(this, $"Delete playlist {tvi.Header} ?", "Delete", MessageBoxButton.YesNo, MessageBoxImage.Question);
                     if (rslt == MessageBoxResult.Yes)
                     {
                         DB.DeletePlaylist(plId);
@@ -278,7 +278,7 @@ namespace EvoPlayer
             }
             catch (Exception)
             {
-                
+
             }
             finally
             {
@@ -342,6 +342,19 @@ namespace EvoPlayer
             adder.Owner = this;
             adder.ShowInTaskbar = false;
             adder.Show();
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            foreach (var item in ctrlView.Children)
+            {
+                var ifs = item.GetType().GetInterfaces().FirstOrDefault(x => x.FullName == typeof(Comp.INotifyResize).FullName);
+
+                if (ifs != null)
+                {
+                    ((Comp.INotifyResize)item).WindowResized();
+                }
+            }
         }
     }
 }

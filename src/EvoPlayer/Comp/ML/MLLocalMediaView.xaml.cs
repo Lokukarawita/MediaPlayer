@@ -21,8 +21,9 @@ namespace EvoPlayer.Comp.ML
     /// <summary>
     /// Interaction logic for MLLocalMediaView.xaml
     /// </summary>
-    public partial class MLLocalMediaView : UserControl
+    public partial class MLLocalMediaView : UserControl, INotifyResize
     {
+        private ObservableCollection<Playlist> playListsVM = new ObservableCollection<Playlist>();
         private ObservableCollection<AlbumViewModel> albumsVM = new ObservableCollection<AlbumViewModel>();
         private ObservableCollection<TrackViewModel> trackVM = new ObservableCollection<TrackViewModel>();
 
@@ -50,6 +51,13 @@ namespace EvoPlayer.Comp.ML
             {
                 lstLocalArtist.SelectedIndex = 0;
             }
+
+            var pls = DB.GetPlaylists();
+            pls.ForEach(x => { playListsVM.Add(x); });
+
+            mnuAlbumAddToPlaylist.ItemsSource = playListsVM;
+            mnuArtistAddToPlaylist.ItemsSource = playListsVM;
+            mnuTrackAddToPlaylist.ItemsSource = playListsVM;
         }
 
         private void lstLocalArtist_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -84,8 +92,14 @@ namespace EvoPlayer.Comp.ML
                     trackVM.Add(new TrackViewModel(x));
                 });
 
-                
+
             }
+        }
+
+        public void WindowResized()
+        {
+            //var traks = this.gridMain.RowDefinitions[1];
+            //lstLocalTracks.MaxHeight = traks.ActualHeight;
         }
 
         internal class AlbumViewModel
@@ -95,18 +109,26 @@ namespace EvoPlayer.Comp.ML
                 this.AlbumTitle = i.Album;
                 using (var tag = TagLib.File.Create(i.Path))
                 {
-                    AlbumArt = new BitmapImage();
-                    using (var mem = new System.IO.MemoryStream(tag.Tag.Pictures[0].Data.ToArray()))
+                    if (tag.Tag != null && tag.Tag.Pictures != null && tag.Tag.Pictures.Length > 0)
                     {
-                        mem.Position = 0;
-                        AlbumArt.BeginInit();
-                        AlbumArt.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
-                        AlbumArt.CacheOption = BitmapCacheOption.OnLoad;
-                        AlbumArt.UriSource = null;
-                        AlbumArt.StreamSource = mem;
-                        AlbumArt.EndInit();
+                        AlbumArt = new BitmapImage();
+                        using (var mem = new System.IO.MemoryStream(tag.Tag.Pictures[0].Data.ToArray()))
+                        {
+                            mem.Position = 0;
+                            RenderOptions.SetBitmapScalingMode(AlbumArt, BitmapScalingMode.HighQuality);
+                            AlbumArt.BeginInit();
+                            AlbumArt.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+                            AlbumArt.CacheOption = BitmapCacheOption.OnLoad;
+                            AlbumArt.UriSource = null;
+                            AlbumArt.StreamSource = mem;
+                            AlbumArt.EndInit();
+                        }
+                        AlbumArt.Freeze();
                     }
-                    AlbumArt.Freeze();
+                    else
+                    {
+                        AlbumArt = new BitmapImage(new Uri("pack://application:,,,/Resources/music_album.png"));
+                    }
                 }
             }
 
@@ -128,6 +150,35 @@ namespace EvoPlayer.Comp.ML
             public string Album { get; set; }
             public string Title { get; set; }
             public TimeSpan Duration { get; set; }
+        }
+
+        private void lstLocalTracks_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            var gv = ((GridView)lstLocalTracks.View);
+            for (int i = 0; i < gv.Columns.Count; i++)
+            {
+                gv.Columns[i].Width = gv.Columns[i].ActualWidth;
+                gv.Columns[i].Width = double.NaN;
+            }
+        }
+
+        private void mnuArtistPlay_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void mnuArtistAddToPlaylist_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void mnuAlbumAddToPlaylist_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void mnuTrackAddToPlaylist_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

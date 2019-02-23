@@ -33,59 +33,104 @@
                 </StackPanel>
             </DockPanel>
         </materialDesign:ColorZone>
-        <!--<DockPanel Background="Red" Height="50" DockPanel.Dock="Top">
-            
-            -->
-        <!--<TextBox x:Name="CommentTextBox" HorizontalAlignment="Right" Width="100"  Margin="10 10" materialDesign:HintAssist.Hint="Search" />-->
-        <!--
-        </DockPanel>-->
-        <Grid x:Name="gridMain">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"   />
-                <ColumnDefinition Width="3*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-            <ListView x:Name="lstLocalArtist" 
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Top" Orientation="Vertical">
+                <ListView x:Name="lstLocalArtist" 
                       MaxHeight="200" 
-                      Grid.Column="0" 
-                      Grid.Row="0" 
                       ScrollViewer.CanContentScroll="True" 
                       ScrollViewer.VerticalScrollBarVisibility="Visible" SelectionChanged="lstLocalArtist_SelectionChanged">
-
-            </ListView>
-            <ListView Grid.Column="1" Grid.Row="0" x:Name="lstLocalAlbums" MaxHeight="200" 
+                    <ListView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem x:Name="mnuArtistPlay" Click="mnuArtistPlay_Click" Header="Play" />
+                            <MenuItem x:Name="mnuArtistAddToPlaylist" Header="Add to playlist" Click="mnuArtistAddToPlaylist_Click" >
+                                <MenuItem.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding PlaylistName}" />
+                                    </DataTemplate>
+                                </MenuItem.ItemTemplate>
+                                <MenuItem.ItemsSource>
+                                    <CompositeCollection>
+                                        <CollectionContainer Collection="{Binding playListsVM}" />
+                                    </CompositeCollection>
+                                </MenuItem.ItemsSource>
+                            </MenuItem>
+                        </ContextMenu>
+                    </ListView.ContextMenu>
+                </ListView>
+                <ListView x:Name="lstLocalAlbums" MaxHeight="200" 
                       ScrollViewer.CanContentScroll="True" 
                       ScrollViewer.VerticalScrollBarVisibility="Visible"
                       SelectionChanged="lstLocalAlbums_SelectionChanged">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <Rectangle Height="100" Width="100">
-                                <Rectangle.Fill>
-                                    <ImageBrush ImageSource="{Binding AlbumArt}" />
-                                </Rectangle.Fill>
-                            </Rectangle>
-                            <StackPanel Orientation="Vertical" Margin="12,0,0,0">
-                                <TextBlock FontSize="14" Text="{Binding AlbumTitle}" Foreground="{DynamicResource PrimaryHueLightBrush}"  />
+                    <ListView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem x:Name="mnuAlbumPlay" Click="mnuArtistPlay_Click" Header="Play" />
+                            <MenuItem x:Name="mnuAlbumAddToPlaylist" Header="Add to playlist" Click="mnuAlbumAddToPlaylist_Click" >
+                                <MenuItem.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding PlaylistName}" />
+                                    </DataTemplate>
+                                </MenuItem.ItemTemplate>
+                                <MenuItem.ItemsSource>
+                                    <CompositeCollection>
+                                        <CollectionContainer Collection="{Binding playListsVM}" />
+                                    </CompositeCollection>
+                                </MenuItem.ItemsSource>
+                            </MenuItem>
+                        </ContextMenu>
+                    </ListView.ContextMenu>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Ellipse Height="100" Width="100" >
+                                    <Ellipse.Effect>
+                                        <DropShadowEffect ShadowDepth="2"  Color="#2d2d2d"/>
+                                    </Ellipse.Effect>
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="{Binding AlbumArt}" />
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <StackPanel Orientation="Vertical" Margin="12,0,0,0">
+                                    <TextBlock FontSize="14" Text="{Binding AlbumTitle}" Foreground="{DynamicResource PrimaryHueLightBrush}"  />
+                                </StackPanel>
                             </StackPanel>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <ListView Grid.ColumnSpan="2" Grid.Row="1" x:Name="lstLocalTracks">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Artist" DisplayMemberBinding="{Binding Artist}" />
-                        <GridViewColumn Header="Album" DisplayMemberBinding="{Binding Album}" />
-                        <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Title}" />
-                        <GridViewColumn Header="Duration" DisplayMemberBinding="{Binding Duration}" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+            <StackPanel>
+                <ListView x:Name="lstLocalTracks" MaxHeight="200" SizeChanged="lstLocalTracks_SizeChanged"  VirtualizingStackPanel.IsVirtualizing="False">
+                    <ListView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem x:Name="mnuTrackPlay" Click="mnuArtistPlay_Click" Header="Play" />
+                            <MenuItem x:Name="mnuTrackAddToPlaylist" Header="Add to playlist" Click="mnuTrackAddToPlaylist_Click" >
+                                <MenuItem.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding PlaylistName}" />
+                                    </DataTemplate>
+                                </MenuItem.ItemTemplate>
+                                <MenuItem.ItemsSource>
+                                    <CompositeCollection>
+                                        <CollectionContainer Collection="{Binding playListsVM}" />
+                                    </CompositeCollection>
+                                </MenuItem.ItemsSource>
+                            </MenuItem>
+                        </ContextMenu>
+                    </ListView.ContextMenu>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="Auto" Header="Title"  DisplayMemberBinding="{Binding Title}" />
+                            <GridViewColumn Width="Auto" Header="Artist" DisplayMemberBinding="{Binding Artist}" />
+                            <GridViewColumn Width="Auto" Header="Album" DisplayMemberBinding="{Binding Album}" />
+                            <GridViewColumn Width="Auto" Header="Duration" DisplayMemberBinding="{Binding Duration, StringFormat='mm\\:ss'}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </StackPanel>
+        </DockPanel>
     </DockPanel>
 </UserControl>

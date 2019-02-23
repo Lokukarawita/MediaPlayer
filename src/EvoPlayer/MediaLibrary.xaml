@@ -14,7 +14,10 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="EvoPlayer - Media Libary" Height="672" Width="828" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+        Title="EvoPlayer - Media Libary" Height="672" Width="828" 
+        WindowStartupLocation="CenterScreen" 
+        WindowState="Maximized"
+        SizeChanged="Window_SizeChanged">
     <materialDesign:DialogHost x:Name="dlgCreatePL" Identifier="dlgCreatePL" DialogClosing="dlgCreatePL_DialogClosing">
         <materialDesign:DialogHost.DialogContent>
             <StackPanel Margin="16">
