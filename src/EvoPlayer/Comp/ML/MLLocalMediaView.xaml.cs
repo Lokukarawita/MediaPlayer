@@ -127,7 +127,7 @@ namespace EvoPlayer.Comp.ML
                     }
                     else
                     {
-                        AlbumArt = new BitmapImage(new Uri("pack://application:,,,/Resources/music_album.png"));
+                        AlbumArt = new BitmapImage(new Uri("pack://application:,,,/Resources/music_album2.png"));
                     }
                 }
             }
