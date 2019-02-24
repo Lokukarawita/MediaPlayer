@@ -41,12 +41,13 @@ namespace EvoPlayer.Comp.ML
 
         private void mnuRemoveItem_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if(lstvItems.SelectedItems.Count > 0)
+            if (lstvItems.SelectedItems.Count > 0)
             {
-                var selected = (MLPlayListEntry[])lstvItems.SelectedItem;
+                var selected = lstvItems.SelectedItems;
                 foreach (var item in selected)
                 {
-                    DB.DeletePlaylistEntry(item.Entry.Id);
+                    var ple = item as MLPlayListEntry;
+                    DB.DeletePlaylistEntry(ple.Entry.Id);
                 }
 
                 currentPL = DB.GetPlaylist(currentPL.Id);
@@ -70,11 +71,20 @@ namespace EvoPlayer.Comp.ML
             }
             public MLPlayListEntry(PlaylistEntry entry)
             {
+                this.Artist = entry.Artist;
                 this.Title = entry.Title;
                 this.Duration = entry.Duration;
                 this.Entry = entry;
             }
 
+            public string DisplayTitle
+            {
+                get
+                {
+                    return $"{this.Artist} - {this.Title}";
+                }
+            }
+            public string Artist { get; set; }
             public string Title { get; set; }
             public TimeSpan Duration { get; set; }
             public PlaylistEntry Entry { get; set; }

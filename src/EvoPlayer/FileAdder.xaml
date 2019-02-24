@@ -46,7 +46,7 @@
             <Label Margin="0,0,0,0" x:Name="lblStatus" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top" Height="35" Width="315" Content="" />
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="btnClose" Style="{StaticResource MaterialDesignRaisedLightButton}"  Width="80" Margin="0 0 10 0">
+            <Button x:Name="btnClose" Style="{StaticResource MaterialDesignRaisedLightButton}"  Width="80" Margin="0 0 10 0" Click="btnClose_Click">
                 Close
             </Button>
         </StackPanel>

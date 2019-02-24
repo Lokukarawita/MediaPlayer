@@ -187,5 +187,10 @@ namespace EvoPlayer
             prbProgress.Value = 0;
             lblStatus.Content = "";
         }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

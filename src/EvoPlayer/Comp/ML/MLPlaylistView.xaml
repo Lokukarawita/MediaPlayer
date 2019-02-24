@@ -8,7 +8,7 @@
              d:DesignHeight="300" d:DesignWidth="300" Margin="0">
 
     <Grid Margin="0">
-        <ListView x:Name="lstvItems" Grid.Column="0" Grid.Row="0" Margin="0">
+        <ListView x:Name="lstvItems" Grid.Column="0" Grid.Row="0" Margin="0" MaxHeight="600" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <ListView.ContextMenu>
                 <ContextMenu>
                     <MenuItem x:Name="mnuRemoveItem" Header="Remove" Click="mnuRemoveItem_Click" />
@@ -16,8 +16,8 @@
             </ListView.ContextMenu>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Title" Width="200" DisplayMemberBinding="{Binding Title}" />
-                    <GridViewColumn Header="Duration" DisplayMemberBinding="{Binding Duration}" />
+                    <GridViewColumn Header="Title" Width="200" DisplayMemberBinding="{Binding DisplayTitle}" />
+                    <GridViewColumn Header="Duration" DisplayMemberBinding="{Binding Duration, StringFormat='mm\\:ss'}" />
                 </GridView>
             </ListView.View>
         </ListView>

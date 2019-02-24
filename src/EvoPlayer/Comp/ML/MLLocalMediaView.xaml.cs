@@ -107,6 +107,8 @@ namespace EvoPlayer.Comp.ML
             public AlbumViewModel(LocalMediaItem i)
             {
                 this.AlbumTitle = i.Album;
+                this.Artist = i.Artist;
+
                 using (var tag = TagLib.File.Create(i.Path))
                 {
                     if (tag.Tag != null && tag.Tag.Pictures != null && tag.Tag.Pictures.Length > 0)
@@ -134,18 +136,21 @@ namespace EvoPlayer.Comp.ML
 
             public BitmapImage AlbumArt { get; set; }
             public string AlbumTitle { get; set; }
+            public string Artist { get; set; }
         }
 
         internal class TrackViewModel
         {
             public TrackViewModel(LocalMediaItem i)
             {
+                this.TrackID = i.Id;
                 this.Album = i.Album;
                 this.Artist = i.Artist;
                 this.Duration = i.Duration;
                 this.Title = i.Title;
             }
 
+            public int TrackID { get; set; }
             public string Artist { get; set; }
             public string Album { get; set; }
             public string Title { get; set; }
@@ -169,16 +174,36 @@ namespace EvoPlayer.Comp.ML
 
         private void mnuArtistAddToPlaylist_Click(object sender, RoutedEventArgs e)
         {
+            var x = e.OriginalSource as MenuItem;
+            var playList = x.DataContext as Playlist;
+            var selectedArtits = lstLocalArtist.SelectedItems;
+            foreach (var artist in selectedArtits)
+            {
+                DB.AddToPlaylistByArtist(playList.Id, artist.ToString());
+            }
         }
 
         private void mnuAlbumAddToPlaylist_Click(object sender, RoutedEventArgs e)
         {
-
+            var x = e.OriginalSource as MenuItem;
+            var playList = x.DataContext as Playlist;
+            var selectedAlbums = lstLocalAlbums.SelectedItems;
+            foreach (var album in selectedAlbums)
+            {
+                var albumEx = (AlbumViewModel)album;
+                DB.AddToPlaylistByAlbum(playList.Id, albumEx.Artist, albumEx.AlbumTitle);
+            }
         }
 
         private void mnuTrackAddToPlaylist_Click(object sender, RoutedEventArgs e)
         {
-
+            var x = e.OriginalSource as MenuItem;
+            var playList = x.DataContext as Playlist;
+            var selectedTracks = lstLocalTracks.SelectedItems
+                .Cast<TrackViewModel>()
+                .Select(j => j.TrackID)
+                .ToArray();
+            DB.AddToPlaylistByTrack(playList.Id, selectedTracks);
         }
     }
 }

@@ -75,9 +75,6 @@ namespace EvoPlayer.Core.Data
         {
             return CreatePlaylist(name, new List<PlaylistEntry>());
         }
-
-
-
         public static int CreatePlaylist(string name, List<PlaylistEntry> entries)
         {
             using (LiteDatabase db = new LiteDatabase(DB_PATH))
@@ -120,6 +117,50 @@ namespace EvoPlayer.Core.Data
                 col.Delete(entryId);
             }
 
+        }
+        public static void AddToPlaylistByArtist(int playListId, string artist)
+        {
+            using (LiteDatabase db = new LiteDatabase(DB_PATH))
+            {
+                var mlCol = db.GetCollection<LocalMediaItem>(C_ML_MLITEMS);
+                var tracks = mlCol.Find(x => x.Artist == artist).ToList();
+                var playList = GetPlaylist(playListId);
+                foreach (var track in tracks)
+                {
+                    var entry = new PlaylistEntry(track);
+                    playList.Entries.Add(entry);
+                }
+                SavePlaylist(playList);
+            }
+        }
+        public static void AddToPlaylistByAlbum(int playListId, string artist, string albumTitle)
+        {
+            using (LiteDatabase db = new LiteDatabase(DB_PATH))
+            {
+                var mlCol = db.GetCollection<LocalMediaItem>(C_ML_MLITEMS);
+                var tracks = mlCol.Find(x => x.Artist == artist && x.Album == albumTitle).ToList();
+                var playList = GetPlaylist(playListId);
+                foreach (var track in tracks)
+                {
+                    var entry = new PlaylistEntry(track);
+                    playList.Entries.Add(entry);
+                }
+                SavePlaylist(playList);
+            }
+        }
+        public static void AddToPlaylistByTrack(int playListId, int[] trackIDs)
+        {
+            using (LiteDatabase db = new LiteDatabase(DB_PATH))
+            {
+                var mlCol = db.GetCollection<LocalMediaItem>(C_ML_MLITEMS);
+                var bsonValues = trackIDs.Select(x => new BsonValue(x));
+                var query = Query.In("_id", bsonValues);
+                var tracks = mlCol.Find(query).ToList();
+                var playList = GetPlaylist(playListId);
+                var entries = tracks.Select(x => new PlaylistEntry(x)).ToList();
+                playList.Entries.AddRange(entries);                
+                SavePlaylist(playList);
+            }
         }
 
 
