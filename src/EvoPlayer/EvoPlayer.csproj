@@ -119,6 +119,8 @@
     <Compile Include="Core\IO\SearchCompletedEventArgs.cs" />
     <Compile Include="Core\IO\SearchLocalDisk.cs" />
     <Compile Include="Core\IO\SearchProgressEventArgs.cs" />
+    <Compile Include="Core\Player\DatabasePlaylistControl.cs" />
+    <Compile Include="Core\Player\IPlaylistControl.cs" />
     <Compile Include="FileAdder.xaml.cs">
       <DependentUpon>FileAdder.xaml</DependentUpon>
     </Compile>
