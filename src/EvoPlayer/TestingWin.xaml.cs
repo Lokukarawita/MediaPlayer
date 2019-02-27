@@ -29,7 +29,8 @@ namespace EvoPlayer
             np.Entries.Add(new Core.Data.Domain.PlaylistEntry()
             {
                 StorageType = Core.Data.Domain.MediaStorageType.Remote,
-                Path = "http://192.168.1.38:32469/object/c707e4a95144a831aa54/file.mp3"
+                Path = "http://content.screencast.com/users/qiangzipeng/folders/Default/media/3e3cc603-5d59-4e2d-9402-81105866c136/atb%2520-%2520ecstasy.mp3"
+                //Path = "http://192.168.1.38:32469/object/c707e4a95144a831aa54/file.mp3"
             });
 
             var player = new Core.Ops.libZPlay.LibZPlayPlayer();

@@ -12,14 +12,38 @@ namespace EvoPlayer.Core.Ops.libZPlay
         private PlaylistController _plctrl;
         private IEqualizerController _eqctrl;
         private Lib.ZPlay _zplay;
-        private StreamRead reader;
+
+        private StreamRead _streamReader;
+        private Lib.TCallbackFunc _zplayCallback;
+        private Lib.TCallbackMessage _zplayCallbackTypes;
 
         public LibZPlayPlayer()
         {
             _zplay = new Lib.ZPlay();
             _plctrl = new PlaylistController();
             _eqctrl = new LibZPlayEqualizerController(_zplay);
-            _zplay.SetCallbackFunc(new Lib.TCallbackFunc(LibZPlay_Callback), (Lib.TCallbackMessage)Lib.TCallbackMessage.MsgStreamBufferDoneAsync, 0);
+
+            _zplayCallback = new Lib.TCallbackFunc(LibZPlay_Callback);
+            _zplayCallbackTypes =
+                Lib.TCallbackMessage.MsgPlayAsync |
+                Lib.TCallbackMessage.MsgStopAsync |
+                Lib.TCallbackMessage.MsgStreamBufferDoneAsync |
+                Lib.TCallbackMessage.MsgStreamNeedMoreDataAsync;
+            _zplay.SetCallbackFunc(_zplayCallback, _zplayCallbackTypes, 0);
+        }
+        ~LibZPlayPlayer()
+        {
+            if (_zplay != null)
+            {
+                _zplay.StopPlayback();
+                _zplay.Close();
+                _zplayCallback = null;
+            }
+
+            if (_streamReader != null)
+            {
+                _streamReader.Close();
+            }
         }
 
         private int LibZPlay_Callback(uint objptr, int user_data, Lib.TCallbackMessage msg, uint param1, uint param2)
@@ -39,6 +63,8 @@ namespace EvoPlayer.Core.Ops.libZPlay
                 case Lib.TCallbackMessage.MsgExitVolumeSlideAsync:
                     break;
                 case Lib.TCallbackMessage.MsgStreamBufferDoneAsync:
+                    var buf = _streamReader.GetBytes();
+                    _zplay.PushDataToStream(ref buf, (uint)buf.Length);
                     break;
                 case Lib.TCallbackMessage.MsgStreamNeedMoreDataAsync:
                     break;
@@ -57,6 +83,8 @@ namespace EvoPlayer.Core.Ops.libZPlay
                 case Lib.TCallbackMessage.MsgExitVolumeSlide:
                     break;
                 case Lib.TCallbackMessage.MsgStreamBufferDone:
+                    var next = _streamReader.GetBytes();
+                    _zplay.PushDataToStream(ref next, (uint)next.Length);
                     break;
                 case Lib.TCallbackMessage.MsgStreamNeedMoreData:
                     break;
@@ -81,15 +109,14 @@ namespace EvoPlayer.Core.Ops.libZPlay
         }
         private void OpenStream(string streamPath)
         {
-            reader = new StreamRead(streamPath);
-            var bytes = reader.GetBytes();
-            _zplay.OpenStream(true, true, ref bytes, (uint)bytes.Length, Lib.TStreamFormat.sfAutodetect);
+            _streamReader = new StreamRead(streamPath);
+            var bytes = _streamReader.GetBytes();
+            _zplay.OpenStream(true, true, ref bytes, (uint)bytes.Length, Lib.TStreamFormat.sfMp3);
         }
         private void OpenLocalFile(string path)
         {
             _zplay.OpenFile(path, Lib.TStreamFormat.sfAutodetect);
         }
-
 
 
         private Lib.TStreamStatus GetStatus()
@@ -98,6 +125,7 @@ namespace EvoPlayer.Core.Ops.libZPlay
             _zplay.GetStatus(ref status);
             return status;
         }
+
 
         public void Play()
         {
@@ -147,7 +175,6 @@ namespace EvoPlayer.Core.Ops.libZPlay
                 return _plctrl;
             }
         }
-
         public PlaybackStatus Status
         {
             get
@@ -163,7 +190,6 @@ namespace EvoPlayer.Core.Ops.libZPlay
 
             }
         }
-
         public int Volume
         {
             get
@@ -172,7 +198,6 @@ namespace EvoPlayer.Core.Ops.libZPlay
                 _zplay.GetMasterVolume(ref lv, ref rv);
                 return lv;
             }
-
             set
             {
                 if (value > 100)
@@ -184,7 +209,7 @@ namespace EvoPlayer.Core.Ops.libZPlay
             }
         }
 
-
+        #region Internal classes
 
         private class StreamRead
         {
@@ -223,6 +248,7 @@ namespace EvoPlayer.Core.Ops.libZPlay
                 resp.Close();
                 resp.Dispose();
             }
-        }
+        } 
+        #endregion
     }
 }
