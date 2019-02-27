@@ -36,6 +36,14 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="LiteDB, Version=4.1.4.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
       <HintPath>..\packages\LiteDB.4.1.4\lib\net40\LiteDB.dll</HintPath>
@@ -82,6 +90,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Core\Ops\EQBand.cs" />
+    <Compile Include="Core\Ops\IEqualizerController.cs" />
+    <Compile Include="Core\Ops\IPlayer.cs" />
+    <Compile Include="Core\Ops\libZPlay\Lib\libZPlay.cs" />
+    <Compile Include="Core\Ops\libZPlay\LibZPlayEqualizerController.cs" />
+    <Compile Include="Core\Ops\libZPlay\LibZPlayPlayer.cs" />
+    <Compile Include="Core\Ops\PlaybackStatus.cs" />
+    <Compile Include="Core\Ops\VUMeterInfo.cs" />
+    <Compile Include="TestingWin.xaml.cs">
+      <DependentUpon>TestingWin.xaml</DependentUpon>
+    </Compile>
     <Page Include="Comp\ML\MLLocalMediaView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -119,8 +138,8 @@
     <Compile Include="Core\IO\SearchCompletedEventArgs.cs" />
     <Compile Include="Core\IO\SearchLocalDisk.cs" />
     <Compile Include="Core\IO\SearchProgressEventArgs.cs" />
-    <Compile Include="Core\Player\DatabasePlaylistControl.cs" />
-    <Compile Include="Core\Player\IPlaylistControl.cs" />
+    <Compile Include="Core\Ops\PlaylistController.cs" />
+    <Compile Include="Core\Ops\PlaybackRepeatMode.cs" />
     <Compile Include="FileAdder.xaml.cs">
       <DependentUpon>FileAdder.xaml</DependentUpon>
     </Compile>
@@ -129,6 +148,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="MediaLibrary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestingWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -176,6 +199,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\music_album2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Libs\libzplay.dll">
+      <Link>libzplay.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

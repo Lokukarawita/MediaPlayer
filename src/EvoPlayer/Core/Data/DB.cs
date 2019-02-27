@@ -60,7 +60,7 @@ namespace EvoPlayer.Core.Data
             using (LiteDatabase db = new LiteDatabase(DB_PATH))
             {
                 var cPLists = db.GetCollection<Playlist>(C_PL_LISTS);
-                return cPLists.FindAll().ToList();
+                return cPLists.Include(x => x.Entries).FindAll().ToList();
             }
         }
         public static Playlist GetPlaylist(int id)
@@ -93,6 +93,7 @@ namespace EvoPlayer.Core.Data
                 foreach (var item in pl.Entries)
                 {
                     var ple = db.GetCollection<PlaylistEntry>(C_PL_ENTRIES);
+                    item.Playlist = pl;
                     ple.Upsert(item);
                 }
                 var col = db.GetCollection<Playlist>(C_PL_LISTS);
@@ -158,7 +159,7 @@ namespace EvoPlayer.Core.Data
                 var tracks = mlCol.Find(query).ToList();
                 var playList = GetPlaylist(playListId);
                 var entries = tracks.Select(x => new PlaylistEntry(x)).ToList();
-                playList.Entries.AddRange(entries);                
+                playList.Entries.AddRange(entries);
                 SavePlaylist(playList);
             }
         }
