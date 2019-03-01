@@ -17,6 +17,8 @@ namespace EvoPlayer.Core.Ops.libZPlay
         private Lib.TCallbackFunc _zplayCallback;
         private Lib.TCallbackMessage _zplayCallbackTypes;
 
+        public event EventHandler<PlaybackStatusEventArgs> PlaybackStatusUpdate;
+
         public LibZPlayPlayer()
         {
             _zplay = new Lib.ZPlay();
@@ -46,13 +48,25 @@ namespace EvoPlayer.Core.Ops.libZPlay
             }
         }
 
+
+        private void OnPlayBackStatus(PlaybackStatusEventArgs args)
+        {
+            if (PlaybackStatusUpdate != null)
+            {
+                PlaybackStatusUpdate(this, args);
+            }
+        }
+
+
         private int LibZPlay_Callback(uint objptr, int user_data, Lib.TCallbackMessage msg, uint param1, uint param2)
         {
             switch (msg)
             {
                 case Lib.TCallbackMessage.MsgStopAsync:
+                    OnPlayBackStatus(new PlaybackStatusEventArgs() { CurrentStatus = Status, Item = _plctrl.Current });
                     break;
                 case Lib.TCallbackMessage.MsgPlayAsync:
+                    OnPlayBackStatus(new PlaybackStatusEventArgs() { CurrentStatus = Status, Item = _plctrl.Current });
                     break;
                 case Lib.TCallbackMessage.MsgEnterLoopAsync:
                     break;

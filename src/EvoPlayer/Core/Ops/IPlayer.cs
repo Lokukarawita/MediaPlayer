@@ -8,6 +8,8 @@ namespace EvoPlayer.Core.Ops
 {
     public interface IPlayer
     {
+        event EventHandler<PlaybackStatusEventArgs> PlaybackStatusUpdate;
+
         void Play();
         void Stop();
         void Pause();

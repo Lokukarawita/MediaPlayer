@@ -97,6 +97,7 @@
     <Compile Include="Core\Ops\libZPlay\LibZPlayEqualizerController.cs" />
     <Compile Include="Core\Ops\libZPlay\LibZPlayPlayer.cs" />
     <Compile Include="Core\Ops\PlaybackStatus.cs" />
+    <Compile Include="Core\Ops\PlaybackStatusEventArgs.cs" />
     <Compile Include="Core\Ops\VUMeterInfo.cs" />
     <Compile Include="TestingWin.xaml.cs">
       <DependentUpon>TestingWin.xaml</DependentUpon>
